@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+
+    <Folder Name="/src/">
+        <Project Path="src/Modules.Parcels.Domain.Shared/Modules.Parcels.Domain.Shared.csproj" />
+        <Project Path="src/Modules.Parcels.Domain/Modules.Parcels.Domain.csproj" />
+        <Project Path="src/Modules.Parcels.Application.Contracts/Modules.Parcels.Application.Contracts.csproj" />
+        <Project Path="src/Modules.Parcels.Application/Modules.Parcels.Application.csproj" />
+        <Project Path="src/Modules.Parcels.EntityFrameworkCore/Modules.Parcels.EntityFrameworkCore.csproj" />
+        <Project Path="src/Modules.Parcels.HttpApi/Modules.Parcels.HttpApi.csproj" />
+        <Project Path="src/Modules.Parcels.HttpApi.Client/Modules.Parcels.HttpApi.Client.csproj" />
+        <Project Path="src/Modules.Parcels.Installer/Modules.Parcels.Installer.csproj" />
+    </Folder>
+    
+    <Folder Name="/test/">
+        <Project Path="test/Modules.Parcels.TestBase/Modules.Parcels.TestBase.csproj" />
+        <Project Path="test/Modules.Parcels.EntityFrameworkCore.Tests/Modules.Parcels.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/Modules.Parcels.Domain.Tests/Modules.Parcels.Domain.Tests.csproj" />
+        <Project Path="test/Modules.Parcels.Application.Tests/Modules.Parcels.Application.Tests.csproj" />
+    </Folder>
+</Solution>

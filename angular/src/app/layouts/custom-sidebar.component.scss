@@ -1,0 +1,376 @@
+// ─── Tokens ───────────────────────────────────────────────────
+$sidebar-w:        260px;
+$sidebar-w-mini:   72px;
+$sidebar-bg-from:  #0d1b2e;
+$sidebar-bg-to:    #0f3460;
+$brand-bg:         rgba(0,0,0,.25);
+$item-color:       #8fafc8;
+$item-hover-bg:    rgba(255,255,255,.07);
+$item-hover-color: #dceeff;
+$active-from:      #1e4fa0;
+$active-to:        #153580;
+$active-color:     #ffffff;
+$active-glow:      rgba(30,79,160,.5);
+$icon-color:       #5a86b0;
+$icon-active:      #93c5fd;
+$child-color:      #7a9dbf;
+$child-active:     #bfdbfe;
+$divider-color:    rgba(255,255,255,.06);
+$radius:           10px;
+$transition:       all .22s cubic-bezier(.4,0,.2,1);
+
+// ─── Shell ────────────────────────────────────────────────────
+.app-shell {
+  display: contents;
+}
+
+// ─── Sidebar ──────────────────────────────────────────────────
+.sidebar {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;       // RTL: يمين
+  width: $sidebar-w;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(175deg, $sidebar-bg-from 0%, darken($sidebar-bg-to, 5%) 100%);
+  box-shadow: -3px 0 24px rgba(0,0,0,.35);
+  transition: width .28s cubic-bezier(.4,0,.2,1);
+  z-index: 1000;
+  overflow: hidden;
+
+  // خط زخرفي على يسار القائمة (RTL)
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 15%; bottom: 15%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(99,179,237,.25), transparent);
+  }
+
+  &--mini {
+    width: $sidebar-w-mini;
+
+    .sidebar__brand-icon { margin: 0 auto; }
+    .sidebar__toggle { justify-content: center; }
+  }
+}
+
+// ─── Brand ────────────────────────────────────────────────────
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 18px;
+  background: $brand-bg;
+  border-bottom: 1px solid $divider-color;
+  min-height: 70px;
+  flex-shrink: 0;
+}
+
+.sidebar__brand-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1e56a0, #2563eb);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(37,99,235,.4);
+
+  i {
+    color: #fff;
+    font-size: 17px;
+  }
+}
+
+.sidebar__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.sidebar__brand-title {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+.sidebar__brand-sub {
+  color: rgba(255,255,255,.4);
+  font-size: 11px;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+// ─── Nav ──────────────────────────────────────────────────────
+.sidebar__nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 0;
+
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(99,179,237,.15);
+    border-radius: 4px;
+    &:hover { background: rgba(99,179,237,.3); }
+  }
+}
+
+// ─── Item (link & parent button) ─────────────────────────────
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 2px 10px;
+  width: calc(100% - 20px);
+  padding: 10px 13px;
+  border-radius: $radius;
+  color: $item-color;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: $transition;
+  text-align: right;
+  direction: rtl;
+  position: relative;
+
+  &:hover {
+    background: $item-hover-bg;
+    color: $item-hover-color;
+    border-color: rgba(255,255,255,.05);
+
+    .sidebar__icon svg { color: #63b3ed; }
+  }
+
+  // النشط
+  &--active {
+    background: linear-gradient(135deg, $active-from, $active-to) !important;
+    color: $active-color !important;
+    border-color: rgba(99,179,237,.2) !important;
+    box-shadow: 0 4px 16px $active-glow !important;
+
+    .sidebar__icon svg { color: $icon-active !important; }
+
+    // خط يسار (RTL = يسار الشاشة)
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; height: 60%;
+      width: 3px;
+      background: linear-gradient(180deg, #93c5fd, #3b82f6);
+      border-radius: 0 3px 3px 0;
+    }
+  }
+}
+
+// ─── Icon ─────────────────────────────────────────────────────
+.sidebar__icon {
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+
+  svg {
+    width: 18px; height: 18px;
+    color: $icon-color;
+    transition: color .2s ease;
+  }
+}
+
+// ─── Label ────────────────────────────────────────────────────
+.sidebar__label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ─── Arrow ────────────────────────────────────────────────────
+.sidebar__arrow {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .22s ease;
+  opacity: .5;
+
+  svg { width: 14px; height: 14px; color: $item-color; }
+}
+
+.sidebar__group--open .sidebar__arrow {
+  transform: rotate(90deg);
+}
+
+// ─── Children ─────────────────────────────────────────────────
+.sidebar__children {
+  margin: 2px 10px 4px;
+  padding: 4px 0 4px 8px;
+  border-right: 2px solid rgba(99,179,237,.15);
+  margin-right: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  animation: slideDown .2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sidebar__child {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 7px;
+  color: $child-color;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: $transition;
+  direction: rtl;
+
+  &:hover {
+    background: rgba(255,255,255,.05);
+    color: $item-hover-color;
+  }
+
+  &--active {
+    color: $child-active !important;
+    background: rgba(99,179,237,.08) !important;
+    font-weight: 600 !important;
+  }
+}
+
+// ─── Divider ──────────────────────────────────────────────────
+.sidebar__divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 22px 6px;
+  direction: rtl;
+
+  span {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .13em;
+    color: rgba(99,179,237,.35);
+    white-space: nowrap;
+  }
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $divider-color;
+  }
+}
+
+.sidebar__divider-mini {
+  height: 1px;
+  background: $divider-color;
+  margin: 10px 14px;
+}
+
+// ─── Toggle Button ────────────────────────────────────────────
+.sidebar__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(0,0,0,.2);
+  border: none;
+  border-top: 1px solid $divider-color;
+  color: rgba(255,255,255,.35);
+  cursor: pointer;
+  font-size: 12px;
+  transition: $transition;
+  direction: rtl;
+  flex-shrink: 0;
+
+  svg { color: rgba(255,255,255,.4); transition: color .2s ease; }
+
+  &:hover {
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.7);
+    svg { color: rgba(255,255,255,.7); }
+  }
+}
+
+// ─── RTL / LTR Direction Support ─────────────────────────────
+
+// RTL — القائمة على اليمين
+.sidebar--rtl {
+  right: 0;
+  left: auto;
+  box-shadow: -3px 0 24px rgba(0,0,0,.35);
+
+  // خط زخرفي على اليسار
+  &::before {
+    left: 0; right: auto;
+    background: linear-gradient(180deg, transparent, rgba(99,179,237,.25), transparent);
+  }
+
+  // Active indicator — يسار الشاشة
+  .sidebar__item--active::after {
+    left: 0; right: auto;
+    border-radius: 0 3px 3px 0;
+  }
+
+  // Sub-menu border
+  .sidebar__children {
+    border-right: 2px solid rgba(99,179,237,.15);
+    border-left: none;
+    margin-right: 22px;
+    margin-left: 10px;
+    padding-right: 8px;
+    padding-left: 0;
+  }
+}
+
+// LTR — القائمة على اليسار
+.sidebar--ltr {
+  left: 0;
+  right: auto;
+  box-shadow: 3px 0 24px rgba(0,0,0,.35);
+
+  &::before {
+    right: 0; left: auto;
+    background: linear-gradient(180deg, transparent, rgba(99,179,237,.25), transparent);
+  }
+
+  // Active indicator — يمين الشاشة
+  .sidebar__item--active::after {
+    right: 0; left: auto;
+    border-radius: 3px 0 0 3px;
+  }
+
+  // Sub-menu border
+  .sidebar__children {
+    border-left: 2px solid rgba(99,179,237,.15);
+    border-right: none;
+    margin-left: 22px;
+    margin-right: 10px;
+    padding-left: 8px;
+    padding-right: 0;
+  }
+
+  // اتجاه النصوص
+  .sidebar__item,
+  .sidebar__item--parent,
+  .sidebar__child {
+    text-align: left;
+    direction: ltr;
+  }
+
+  // Arrow flip في LTR
+  .sidebar__group--open .sidebar__arrow {
+    transform: rotate(90deg);
+  }
+}

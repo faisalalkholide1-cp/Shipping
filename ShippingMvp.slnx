@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/ShippingMvp.Domain/ShippingMvp.Domain.csproj" />
+        <Project Path="src/ShippingMvp.Application/ShippingMvp.Application.csproj" />
+        <Project Path="src/ShippingMvp.EntityFrameworkCore/ShippingMvp.EntityFrameworkCore.csproj" />
+        <Project Path="src/ShippingMvp.Domain.Shared/ShippingMvp.Domain.Shared.csproj" />
+        <Project Path="src/ShippingMvp.Application.Contracts/ShippingMvp.Application.Contracts.csproj" />
+        <Project Path="src/ShippingMvp.HttpApi/ShippingMvp.HttpApi.csproj" />
+        <Project Path="src/ShippingMvp.HttpApi.Client/ShippingMvp.HttpApi.Client.csproj" />
+        <Project Path="src/ShippingMvp.HttpApi.Host/ShippingMvp.HttpApi.Host.csproj" />
+        <Project Path="src/ShippingMvp.DbMigrator/ShippingMvp.DbMigrator.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/ShippingMvp.Application.Tests/ShippingMvp.Application.Tests.csproj" />
+        <Project Path="test/ShippingMvp.EntityFrameworkCore.Tests/ShippingMvp.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/ShippingMvp.TestBase/ShippingMvp.TestBase.csproj" />
+        <Project Path="test/ShippingMvp.Domain.Tests/ShippingMvp.Domain.Tests.csproj" />
+        <Project Path="test/ShippingMvp.HttpApi.Client.ConsoleTestApp/ShippingMvp.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>

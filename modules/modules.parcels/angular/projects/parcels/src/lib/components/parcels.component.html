@@ -1,0 +1,174 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <h5 class="card-title mb-0">{{ 'Parcels::Menu:Parcels' | abpLocalization }}</h5>
+      </div>
+      <div class="col-md-4">
+        <select class="form-select" [(ngModel)]="statusFilter" (ngModelChange)="list.get()">
+          <option [ngValue]="null">{{ 'Parcels::Status' | abpLocalization }} — All</option>
+          @for (s of statusOptions; track s.value) {
+            <option [ngValue]="s.value">{{ s.labelKey | abpLocalization }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-md-4 text-end">
+        <button
+          *abpPermission="'ShippingManagement.Parcels.Create'"
+          class="btn btn-primary"
+          type="button"
+          (click)="openCreate()"
+        >
+          <i class="fa fa-plus me-1"></i>
+          {{ 'Parcels::NewParcel' | abpLocalization }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <ngx-datatable [rows]="parcels.items" [count]="parcels.totalCount" [list]="list" default>
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="200" [sortable]="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button class="btn btn-primary btn-sm dropdown-toggle" ngbDropdownToggle type="button">
+              <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+            <div ngbDropdownMenu>
+              <button
+                *abpPermission="'ShippingManagement.Parcels.Edit'"
+                ngbDropdownItem
+                type="button"
+                (click)="openEdit(row)"
+                [disabled]="row.status === parcelStatus.Delivered || row.status === parcelStatus.Cancelled"
+              >
+                {{ '::Edit' | abpLocalization }}
+              </button>
+              @if (row.status === parcelStatus.Created) {
+                <button
+                  *abpPermission="'ShippingManagement.Parcels.Assign'"
+                  ngbDropdownItem
+                  type="button"
+                  (click)="assignCourier(row)"
+                >
+                  {{ 'Parcels::AssignCourier' | abpLocalization }}
+                </button>
+              }
+              @if (row.status === parcelStatus.Assigned) {
+                <button
+                  *abpPermission="'ShippingManagement.Parcels.Deliver'"
+                  ngbDropdownItem
+                  type="button"
+                  (click)="markPickedUp(row.id)"
+                >
+                  {{ 'Parcels::MarkPickedUp' | abpLocalization }}
+                </button>
+              }
+              @if (row.status === parcelStatus.PickedUp) {
+                <button
+                  *abpPermission="'ShippingManagement.Parcels.Deliver'"
+                  ngbDropdownItem
+                  type="button"
+                  (click)="startTransit(row.id)"
+                >
+                  {{ 'Parcels::StartTransit' | abpLocalization }}
+                </button>
+              }
+              @if (row.status === parcelStatus.InTransit) {
+                <button
+                  *abpPermission="'ShippingManagement.Parcels.Deliver'"
+                  ngbDropdownItem
+                  type="button"
+                  (click)="markDelivered(row.id)"
+                >
+                  {{ 'Parcels::MarkDelivered' | abpLocalization }}
+                </button>
+              }
+              @if (row.status !== parcelStatus.Delivered && row.status !== parcelStatus.Cancelled) {
+                <button
+                  *abpPermission="'ShippingManagement.Parcels.Edit'"
+                  ngbDropdownItem
+                  type="button"
+                  (click)="cancelParcel(row.id)"
+                >
+                  {{ 'Parcels::CancelParcel' | abpLocalization }}
+                </button>
+              }
+              <button
+                *abpPermission="'ShippingManagement.Parcels.Delete'"
+                ngbDropdownItem
+                type="button"
+                (click)="delete(row.id)"
+              >
+                {{ '::Delete' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [name]="'Parcels::TrackingNumber' | abpLocalization" prop="trackingNumber"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'Parcels::ReceiverName' | abpLocalization" prop="receiverName"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'Parcels::Status' | abpLocalization" prop="status">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="badge" [ngClass]="statusBadgeClass(row.status)">
+            {{ statusLabelKey(row.status) | abpLocalization }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.creationTime | date: 'short' }}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
+
+<abp-modal [(visible)]="isModalOpen">
+  <ng-template #abpHeader>
+    <h5>{{ (selectedId ? '::Edit' : 'Parcels::NewParcel') | abpLocalization }}</h5>
+  </ng-template>
+  <ng-template #abpBody>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="row g-2">
+        <div class="col-md-6">
+          <label class="form-label">{{ 'Parcels::SenderName' | abpLocalization }}</label>
+          <input class="form-control" formControlName="senderName" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ 'Parcels::SenderPhone' | abpLocalization }}</label>
+          <input class="form-control" formControlName="senderPhone" />
+        </div>
+        <div class="col-12">
+          <label class="form-label">{{ 'Parcels::PickupAddress' | abpLocalization }}</label>
+          <textarea class="form-control" rows="2" formControlName="pickupAddress"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ 'Parcels::ReceiverName' | abpLocalization }}</label>
+          <input class="form-control" formControlName="receiverName" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ 'Parcels::ReceiverPhone' | abpLocalization }}</label>
+          <input class="form-control" formControlName="receiverPhone" />
+        </div>
+        <div class="col-12">
+          <label class="form-label">{{ 'Parcels::DeliveryAddress' | abpLocalization }}</label>
+          <textarea class="form-control" rows="2" formControlName="deliveryAddress"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ 'Parcels::Weight' | abpLocalization }}</label>
+          <input type="number" class="form-control" formControlName="weight" step="0.1" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ 'Parcels::Price' | abpLocalization }}</label>
+          <input type="number" class="form-control" formControlName="price" step="0.01" />
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-secondary" abpClose>{{ '::Cancel' | abpLocalization }}</button>
+    <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">
+      {{ '::Save' | abpLocalization }}
+    </button>
+  </ng-template>
+</abp-modal>

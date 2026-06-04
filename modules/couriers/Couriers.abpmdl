@@ -1,0 +1,58 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "Couriers.Domain": {
+      "path": "src/Couriers.Domain/Couriers.Domain.abppkg",
+      "folder": "src"
+    },
+    "Couriers.Application.Contracts": {
+      "path": "src/Couriers.Application.Contracts/Couriers.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "Couriers.Application": {
+      "path": "src/Couriers.Application/Couriers.Application.abppkg",
+      "folder": "src"
+    },
+    "Couriers.EntityFrameworkCore": {
+      "path": "src/Couriers.EntityFrameworkCore/Couriers.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "Couriers.HttpApi": {
+      "path": "src/Couriers.HttpApi/Couriers.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "Couriers.HttpApi.Client": {
+      "path": "src/Couriers.HttpApi.Client/Couriers.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "Couriers.TestBase": {
+      "path": "test/Couriers.TestBase/Couriers.TestBase.abppkg",
+      "folder": "test"
+    },
+    "Couriers.EntityFrameworkCore.Tests": {
+      "path": "test/Couriers.EntityFrameworkCore.Tests/Couriers.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "Couriers.Domain.Tests": {
+      "path": "test/Couriers.Domain.Tests/Couriers.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "Couriers.Application.Tests": {
+      "path": "test/Couriers.Application.Tests/Couriers.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "Couriers.Domain.Shared": {
+      "path": "src/Couriers.Domain.Shared/Couriers.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "Couriers.Installer": {
+       "path": "src/Couriers.Installer/Couriers.Installer.abppkg",
+       "folder": "src"
+    }
+  }
+}

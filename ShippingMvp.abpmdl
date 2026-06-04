@@ -1,0 +1,115 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "5.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Volo.Abp.Account": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "06/01/2026 14:22:13 +00:00"
+    },
+    "Modules.Parcels": {
+      "path": "modules/modules.parcels/Modules.Parcels.abpmdl"
+    },
+    "Couriers": {
+      "path": "modules/couriers/Couriers.abpmdl"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "ShippingMvp.Application": {
+      "path": "src/ShippingMvp.Application/ShippingMvp.Application.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.Application.Tests": {
+      "path": "test/ShippingMvp.Application.Tests/ShippingMvp.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "ShippingMvp.Domain.Shared": {
+      "path": "src/ShippingMvp.Domain.Shared/ShippingMvp.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.Application.Contracts": {
+      "path": "src/ShippingMvp.Application.Contracts/ShippingMvp.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.HttpApi": {
+      "path": "src/ShippingMvp.HttpApi/ShippingMvp.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.HttpApi.Client": {
+      "path": "src/ShippingMvp.HttpApi.Client/ShippingMvp.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.EntityFrameworkCore.Tests": {
+      "path": "test/ShippingMvp.EntityFrameworkCore.Tests/ShippingMvp.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "ShippingMvp.EntityFrameworkCore": {
+      "path": "src/ShippingMvp.EntityFrameworkCore/ShippingMvp.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.TestBase": {
+      "path": "test/ShippingMvp.TestBase/ShippingMvp.TestBase.abppkg",
+      "folder": "test"
+    },
+    "ShippingMvp.Domain.Tests": {
+      "path": "test/ShippingMvp.Domain.Tests/ShippingMvp.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "ShippingMvp.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/ShippingMvp.HttpApi.Client.ConsoleTestApp/ShippingMvp.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "ShippingMvp.DbMigrator": {
+      "path": "src/ShippingMvp.DbMigrator/ShippingMvp.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.HttpApi.Host": {
+      "path": "src/ShippingMvp.HttpApi.Host/ShippingMvp.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "ShippingMvp.Domain": {
+      "path": "src/ShippingMvp.Domain/ShippingMvp.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

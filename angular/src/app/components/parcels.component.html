@@ -1,0 +1,299 @@
+<div class="parcels-page">
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <div class="page-header">
+    <div class="page-title">
+      <i class="bi bi-box-seam"></i>
+      <div>
+        <h2>Parcels</h2>
+        <span class="total-count">{{ totalCount }} total</span>
+      </div>
+    </div>
+    <button class="btn-create" (click)="openCreateModal()">
+      <i class="bi bi-plus-lg"></i> New Parcel
+    </button>
+  </div>
+
+  <!-- ── Filters ────────────────────────────────────────────── -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        placeholder="Search by name, phone, address..."
+        [(ngModel)]="filterText"
+        (ngModelChange)="onFilterChange()"
+      />
+    </div>
+    <select [(ngModel)]="selectedStatus" (ngModelChange)="onFilterChange()" class="status-filter">
+      <option [ngValue]="null">All Statuses</option>
+      <option *ngFor="let opt of statusOptions" [ngValue]="opt.value">{{ opt.key }}</option>
+    </select>
+  </div>
+
+  <!-- ── Table ──────────────────────────────────────────────── -->
+  <div class="table-card">
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <table class="parcels-table">
+      <thead>
+        <tr>
+          <th>Tracking #</th>
+          <th>Sender</th>
+          <th>Receiver</th>
+          <th>Addresses</th>
+          <th>Weight / Price</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="!isLoading && parcels.length === 0">
+          <td colspan="8" class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <p>No parcels found</p>
+          </td>
+        </tr>
+
+        <tr *ngFor="let parcel of parcels">
+          <td>
+            <span class="tracking-number">{{ parcel.trackingNumber || '—' }}</span>
+          </td>
+          <td>
+            <div class="person-cell">
+              <span class="person-name">{{ parcel.senderName }}</span>
+              <span class="person-phone">{{ parcel.senderPhone }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="person-cell">
+              <span class="person-name">{{ parcel.receiverName }}</span>
+              <span class="person-phone">{{ parcel.receiverPhone }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="address-cell">
+              <span class="address-row">
+                <i class="bi bi-box-arrow-up-right"></i> {{ parcel.pickupAddress }}
+              </span>
+              <span class="address-row">
+                <i class="bi bi-box-arrow-in-down-right"></i> {{ parcel.deliveryAddress }}
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="meta-cell">
+              <span *ngIf="parcel.weight">{{ parcel.weight }} kg</span>
+              <span *ngIf="parcel.price" class="price">${{ parcel.price | number:'1.2-2' }}</span>
+              <span *ngIf="!parcel.weight && !parcel.price" class="muted">—</span>
+            </div>
+          </td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(parcel.status)">
+              {{ getStatusLabel(parcel.status) }}
+            </span>
+          </td>
+          <td>
+            <span class="date">{{ parcel.creationTime | date:'mediumDate' }}</span>
+          </td>
+          <td>
+            <div class="actions-cell">
+
+              <!-- Edit -->
+              <button class="btn-icon btn-edit" title="Edit" (click)="openEditModal(parcel)">
+                <i class="bi bi-pencil"></i>
+              </button>
+
+              <!-- Status Dropdown -->
+              <div class="dropdown-wrap" *ngIf="getAvailableActions(parcel.status).length > 0">
+                <button class="btn-icon btn-status" title="Actions" (click)="toggleDropdown(parcel.id!)">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <div class="dropdown-menu-custom" *ngIf="activeDropdown === parcel.id">
+                  <button
+                    *ngFor="let action of getAvailableActions(parcel.status)"
+                    class="dropdown-item-custom"
+                    [class.danger]="action.danger"
+                    (click)="changeStatus(parcel, action.key)"
+                  >
+                    <i class="bi" [ngClass]="action.icon"></i> {{ action.label }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Delete -->
+              <button class="btn-icon btn-delete" title="Delete" (click)="delete(parcel)">
+                <i class="bi bi-trash3"></i>
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── Pagination ─────────────────────────────────────────── -->
+  <div class="pagination-bar" *ngIf="totalPages > 1">
+    <button class="page-btn" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="page-btn" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- Modal: Create / Edit Parcel                                    -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<ng-template #parcelModal>
+  <div class="modal-header-custom">
+    <h5>{{ isEditMode ? 'Edit Parcel' : 'New Parcel' }}</h5>
+    <button class="modal-close" (click)="modalRef?.close()"><i class="bi bi-x-lg"></i></button>
+  </div>
+
+  <div class="modal-body-custom">
+    <form [formGroup]="form">
+
+      <div class="form-section">
+        <h6 class="section-label"><i class="bi bi-person-up"></i> Sender</h6>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input formControlName="senderName" type="text" placeholder="Sender full name"
+              [class.invalid]="isInvalid('senderName')" />
+            <span class="error-msg" *ngIf="isInvalid('senderName')">Required</span>
+          </div>
+          <div class="form-group">
+            <label>Phone *</label>
+            <input formControlName="senderPhone" type="text" placeholder="+1 555 000 0000"
+              [class.invalid]="isInvalid('senderPhone')" />
+            <span class="error-msg" *ngIf="isInvalid('senderPhone')">Required</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Pickup Address *</label>
+          <input formControlName="pickupAddress" type="text" placeholder="Street, City, ZIP"
+            [class.invalid]="isInvalid('pickupAddress')" />
+          <span class="error-msg" *ngIf="isInvalid('pickupAddress')">Required</span>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h6 class="section-label"><i class="bi bi-person-down"></i> Receiver</h6>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input formControlName="receiverName" type="text" placeholder="Receiver full name"
+              [class.invalid]="isInvalid('receiverName')" />
+            <span class="error-msg" *ngIf="isInvalid('receiverName')">Required</span>
+          </div>
+          <div class="form-group">
+            <label>Phone *</label>
+            <input formControlName="receiverPhone" type="text" placeholder="+1 555 000 0000"
+              [class.invalid]="isInvalid('receiverPhone')" />
+            <span class="error-msg" *ngIf="isInvalid('receiverPhone')">Required</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Delivery Address *</label>
+          <input formControlName="deliveryAddress" type="text" placeholder="Street, City, ZIP"
+            [class.invalid]="isInvalid('deliveryAddress')" />
+          <span class="error-msg" *ngIf="isInvalid('deliveryAddress')">Required</span>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h6 class="section-label"><i class="bi bi-box"></i> Parcel Details</h6>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input formControlName="weight" type="number" min="0" step="0.1" placeholder="0.0" />
+          </div>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input formControlName="price" type="number" min="0" step="0.01" placeholder="0.00" />
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="modal-footer-custom">
+    <button class="btn-cancel" (click)="modalRef?.close()">Cancel</button>
+    <button class="btn-save" (click)="save()" [disabled]="isSaving">
+      <span *ngIf="isSaving" class="spinner-sm"></span>
+      {{ isSaving ? 'Saving...' : (isEditMode ? 'Update' : 'Create') }}
+    </button>
+  </div>
+</ng-template>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- Modal: Assign Courier                                          -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<ng-template #courierModal>
+  <div class="modal-header-custom">
+    <h5><i class="bi bi-person-check"></i> Assign Courier</h5>
+    <button class="modal-close" (click)="courierModalRef?.close()"><i class="bi bi-x-lg"></i></button>
+  </div>
+
+  <div class="modal-body-custom">
+    <p class="modal-info">
+      Select a courier for parcel
+      <strong>{{ currentParcelForCourier?.trackingNumber }}</strong>
+    </p>
+    <div class="form-group">
+      <label>Courier *</label>
+      <select [(ngModel)]="selectedCourierId" class="form-select-custom">
+        <option [ngValue]="null" disabled>— Select a courier —</option>
+        <option *ngFor="let c of couriers" [value]="c.id">{{ c.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <button class="btn-cancel" (click)="courierModalRef?.close()">Cancel</button>
+    <button class="btn-save" (click)="submitCourierAssignment()" [disabled]="!selectedCourierId">
+      Assign
+    </button>
+  </div>
+</ng-template>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- Modal: Mark Returned                                           -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<ng-template #returnModal>
+  <div class="modal-header-custom">
+    <h5><i class="bi bi-arrow-return-left"></i> Mark as Returned</h5>
+    <button class="modal-close" (click)="returnModalRef?.close()"><i class="bi bi-x-lg"></i></button>
+  </div>
+
+  <div class="modal-body-custom">
+    <p class="modal-info">
+      Parcel <strong>{{ returningParcel?.trackingNumber }}</strong> will be marked as returned.
+    </p>
+    <div class="form-group">
+      <label>Return Reason *</label>
+      <textarea
+        [(ngModel)]="returnReason"
+        rows="3"
+        placeholder="e.g. Customer not available, Wrong address..."
+        class="return-textarea"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <button class="btn-cancel" (click)="returnModalRef?.close()">Cancel</button>
+    <button class="btn-return" (click)="confirmReturn()" [disabled]="isReturning || !returnReason.trim()">
+      <span *ngIf="isReturning" class="spinner-sm"></span>
+      {{ isReturning ? 'Processing...' : 'Confirm Return' }}
+    </button>
+  </div>
+</ng-template>

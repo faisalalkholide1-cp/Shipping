@@ -1,0 +1,58 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "Modules.Parcels.Domain": {
+      "path": "src/Modules.Parcels.Domain/Modules.Parcels.Domain.abppkg",
+      "folder": "src"
+    },
+    "Modules.Parcels.Application.Contracts": {
+      "path": "src/Modules.Parcels.Application.Contracts/Modules.Parcels.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "Modules.Parcels.Application": {
+      "path": "src/Modules.Parcels.Application/Modules.Parcels.Application.abppkg",
+      "folder": "src"
+    },
+    "Modules.Parcels.EntityFrameworkCore": {
+      "path": "src/Modules.Parcels.EntityFrameworkCore/Modules.Parcels.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "Modules.Parcels.HttpApi": {
+      "path": "src/Modules.Parcels.HttpApi/Modules.Parcels.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "Modules.Parcels.HttpApi.Client": {
+      "path": "src/Modules.Parcels.HttpApi.Client/Modules.Parcels.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "Modules.Parcels.TestBase": {
+      "path": "test/Modules.Parcels.TestBase/Modules.Parcels.TestBase.abppkg",
+      "folder": "test"
+    },
+    "Modules.Parcels.EntityFrameworkCore.Tests": {
+      "path": "test/Modules.Parcels.EntityFrameworkCore.Tests/Modules.Parcels.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "Modules.Parcels.Domain.Tests": {
+      "path": "test/Modules.Parcels.Domain.Tests/Modules.Parcels.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "Modules.Parcels.Application.Tests": {
+      "path": "test/Modules.Parcels.Application.Tests/Modules.Parcels.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "Modules.Parcels.Domain.Shared": {
+      "path": "src/Modules.Parcels.Domain.Shared/Modules.Parcels.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "Modules.Parcels.Installer": {
+       "path": "src/Modules.Parcels.Installer/Modules.Parcels.Installer.abppkg",
+       "folder": "src"
+    }
+  }
+}

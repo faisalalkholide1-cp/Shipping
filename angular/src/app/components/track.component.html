@@ -1,0 +1,53 @@
+<div class="card mx-auto" style="max-width: 640px">
+  <div class="card-header">
+    <h5 class="mb-0">
+      <i class="fas fa-search-location me-2"></i>
+      {{ 'Parcels::TrackShipment' | abpLocalization }}
+    </h5>
+  </div>
+  <div class="card-body">
+    <div class="input-group mb-4">
+      <input
+        type="text"
+        class="form-control"
+        [placeholder]="'Parcels::EnterTrackingNumber' | abpLocalization"
+        [(ngModel)]="trackingNumber"
+        (keyup.enter)="search()"
+      />
+      <button class="btn btn-primary" type="button" (click)="search()" [disabled]="loading">
+        {{ 'Parcels::Search' | abpLocalization }}
+      </button>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert-warning">{{ errorMessage | abpLocalization }}</div>
+    }
+
+    @if (result) {
+      <div class="mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="text-muted small">{{ 'Parcels::TrackingNumber' | abpLocalization }}</div>
+            <strong>{{ result.trackingNumber }}</strong>
+          </div>
+          <span class="badge fs-6" [ngClass]="statusBadgeClass(result.status)">
+            {{ statusLabelKey(result.status) | abpLocalization }}
+          </span>
+        </div>
+        <hr />
+        <p class="mb-1"><strong>{{ result.receiverName }}</strong></p>
+        <p class="text-muted mb-0">{{ result.deliveryAddress }}</p>
+      </div>
+
+      <h6>{{ 'Parcels::ShipmentTimeline' | abpLocalization }}</h6>
+      <ul class="list-group list-group-flush">
+        @for (item of result.history; track item.creationTime) {
+          <li class="list-group-item d-flex justify-content-between">
+            <span>{{ statusLabelKey(item.status) | abpLocalization }}</span>
+            <span class="text-muted small">{{ item.creationTime | date: 'medium' }}</span>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

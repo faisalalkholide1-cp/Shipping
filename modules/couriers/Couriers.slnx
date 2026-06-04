@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+
+    <Folder Name="/src/">
+        <Project Path="src/Couriers.Domain.Shared/Couriers.Domain.Shared.csproj" />
+        <Project Path="src/Couriers.Domain/Couriers.Domain.csproj" />
+        <Project Path="src/Couriers.Application.Contracts/Couriers.Application.Contracts.csproj" />
+        <Project Path="src/Couriers.Application/Couriers.Application.csproj" />
+        <Project Path="src/Couriers.EntityFrameworkCore/Couriers.EntityFrameworkCore.csproj" />
+        <Project Path="src/Couriers.HttpApi/Couriers.HttpApi.csproj" />
+        <Project Path="src/Couriers.HttpApi.Client/Couriers.HttpApi.Client.csproj" />
+        <Project Path="src/Couriers.Installer/Couriers.Installer.csproj" />
+    </Folder>
+    
+    <Folder Name="/test/">
+        <Project Path="test/Couriers.TestBase/Couriers.TestBase.csproj" />
+        <Project Path="test/Couriers.EntityFrameworkCore.Tests/Couriers.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/Couriers.Domain.Tests/Couriers.Domain.Tests.csproj" />
+        <Project Path="test/Couriers.Application.Tests/Couriers.Application.Tests.csproj" />
+    </Folder>
+</Solution>

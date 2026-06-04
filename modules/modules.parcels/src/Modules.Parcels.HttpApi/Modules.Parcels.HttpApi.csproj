@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Modules.Parcels</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="10.3.0"/>
+    <ProjectReference Include="..\Modules.Parcels.Application.Contracts\Modules.Parcels.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

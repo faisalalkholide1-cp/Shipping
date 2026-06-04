@@ -1,0 +1,180 @@
+<div class="app-shell">
+
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <defs>
+      <symbol id="ic-dashboard" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/>
+        <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/>
+        <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/>
+        <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/>
+      </symbol>
+      <symbol id="ic-parcels" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"
+          d="M20 7.5L12 3 4 7.5 12 12l8-4.5zM4 7.5v9l8 4.5v-9L4 7.5zM20 7.5v9l-8 4.5v-9l8-4.5z"/>
+      </symbol>
+      <symbol id="ic-fleet" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
+          d="M1 9h14v9H1V9zM15 12l4 1.5V18h-4v-6zM5.5 18a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM17.5 18a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/>
+      </symbol>
+      <symbol id="ic-customers" viewBox="0 0 24 24" fill="none">
+        <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.7"/>
+        <path stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+          d="M1 21v-1a7 7 0 0114 0v1M16 3.13a4 4 0 010 7.75M22 21v-1a4 4 0 00-3-3.87"/>
+      </symbol>
+      <symbol id="ic-tracking" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>
+        <path stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+          d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+      </symbol>
+      <symbol id="ic-settings" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>
+        <path stroke="currentColor" stroke-width="1.7"
+          d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+      </symbol>
+      <symbol id="ic-chevron-rtl" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/>
+      </symbol>
+      <symbol id="ic-chevron-ltr" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <aside
+    class="sidebar"
+    [class.sidebar--mini]="navRailCollapsed"
+    [class.sidebar--rtl]="isRtl"
+    [class.sidebar--ltr]="!isRtl"
+    [attr.dir]="isRtl ? 'rtl' : 'ltr'"
+  >
+
+    <div class="sidebar__brand">
+      <div class="sidebar__brand-icon">
+        <i class="fas fa-shipping-fast"></i>
+      </div>
+      <div class="sidebar__brand-text" *ngIf="!navRailCollapsed">
+        <span class="sidebar__brand-title">{{ '::NameSystem' | abpLocalization }}</span>
+        <span class="sidebar__brand-sub">Shipping MVP</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav">
+
+      <a class="sidebar__item"
+         routerLink="/"
+         routerLinkActive="sidebar__item--active"
+         [routerLinkActiveOptions]="{exact:true}"
+         [title]="navRailCollapsed ? ('::HomeSystem' | abpLocalization) : ''">
+        <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-dashboard"/></svg></span>
+        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::HomeSystem' | abpLocalization }}</span>
+      </a>
+
+      <div class="sidebar__group" [class.sidebar__group--open]="parcelsNavOpen">
+        <button class="sidebar__item sidebar__item--parent"
+                (click)="toggleParcelsNav($event)"
+                [title]="navRailCollapsed ? ('::Menu:Parcels' | abpLocalization) : ''">
+          <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-parcels"/></svg></span>
+          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Parcels' | abpLocalization }}</span>
+          <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
+            <svg viewBox="0 0 24 24">
+              <use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/>
+            </svg>
+          </span>
+        </button>
+        <div class="sidebar__children" *ngIf="parcelsNavOpen && !navRailCollapsed">
+          <a class="sidebar__child" routerLink="/parcels" routerLinkActive="sidebar__child--active" [routerLinkActiveOptions]="{exact:true}">
+            {{ '::AllParcels' | abpLocalization }}
+          </a>
+          <a class="sidebar__child" routerLink="/parcels/create" routerLinkActive="sidebar__child--active">
+            {{ '::NewParcel' | abpLocalization }}
+          </a>
+        </div>
+      </div>
+
+      <a class="sidebar__item"
+         routerLink="/tracking"
+         routerLinkActive="sidebar__item--active"
+         [title]="navRailCollapsed ? ('::Menu:Tracking' | abpLocalization) : ''">
+        <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-tracking"/></svg></span>
+        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Tracking' | abpLocalization }}</span>
+      </a>
+
+      <div class="sidebar__group" [class.sidebar__group--open]="fleetNavOpen">
+        <button class="sidebar__item sidebar__item--parent"
+                (click)="toggleFleetNav($event)"
+                [title]="navRailCollapsed ? ('::Permission:Couriers' | abpLocalization) : ''">
+          <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-fleet"/></svg></span>
+          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Permission:Couriers' | abpLocalization }}</span>
+          <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
+            <svg viewBox="0 0 24 24">
+              <use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/>
+            </svg>
+          </span>
+        </button>
+        <div class="sidebar__children" *ngIf="fleetNavOpen && !navRailCollapsed">
+          <a class="sidebar__child" routerLink="/fleet/drivers" routerLinkActive="sidebar__child--active">
+            {{ '::Permission:Couriers' | abpLocalization }}
+          </a>
+          <a class="sidebar__child" routerLink="/fleet/vehicles" routerLinkActive="sidebar__child--active">
+            {{ 'AbpIdentity::Roles:Vehicles' | abpLocalization:'المركبات' }}
+          </a>
+        </div>
+      </div>
+
+      <!-- <a class="sidebar__item"
+         routerLink="/customers"
+         routerLinkActive="sidebar__item--active"
+         [title]="navRailCollapsed ? ('AbpIdentity::Customers' | abpLocalization:'العملاء') : ''">
+        <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-customers"/></svg></span>
+        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'AbpIdentity::Customers' | abpLocalization:'العملاء' }}</span>
+      </a> -->
+
+      <div class="sidebar__divider" *ngIf="!navRailCollapsed">
+        <span>{{ 'AbpIdentity::System' | abpLocalization:'النظام' }}</span>
+      </div>
+      <div class="sidebar__divider-mini" *ngIf="navRailCollapsed"></div>
+
+      <div class="sidebar__group" [class.sidebar__group--open]="settingsNavOpen">
+        <button class="sidebar__item sidebar__item--parent"
+                (click)="toggleSettingsNav($event)"
+                [title]="navRailCollapsed ? ('AbpIdentity::Settings' | abpLocalization) : ''">
+          <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-settings"/></svg></span>
+          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'AbpIdentity::Settings' | abpLocalization }}</span>
+          <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
+            <svg viewBox="0 0 24 24">
+              <use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/>
+            </svg>
+          </span>
+        </button>
+        <div class="sidebar__children" *ngIf="settingsNavOpen && !navRailCollapsed">
+          <a class="sidebar__child" routerLink="/identity/roles" routerLinkActive="sidebar__child--active">
+            {{ 'AbpIdentity::Roles' | abpLocalization }}
+          </a>
+          <a class="sidebar__child" routerLink="/identity/users" routerLinkActive="sidebar__child--active">
+            {{ 'AbpIdentity::Users' | abpLocalization }}
+          </a>
+          <a class="sidebar__child" routerLink="/tenant-management/tenants" routerLinkActive="sidebar__child--active">
+            {{ 'AbpTenantManagement::Tenants' | abpLocalization }}
+          </a>
+          <a class="sidebar__child" routerLink="/setting-management" routerLinkActive="sidebar__child--active">
+            {{ 'AbpSettingManagement::Settings' | abpLocalization }}
+          </a>
+        </div>
+      </div>
+
+    </nav>
+
+    <button class="sidebar__toggle" (click)="toggleNavRail()">
+      <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+        <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          [attr.d]="isRtl
+            ? (navRailCollapsed ? 'M9 18l6-6-6-6' : 'M15 18l-6-6 6-6')
+            : (navRailCollapsed ? 'M15 18l-6-6 6-6' : 'M9 18l6-6-6-6')"/>
+      </svg>
+      <span *ngIf="!navRailCollapsed">
+        {{ (navRailCollapsed ? 'AbpUi::Expand' : 'AbpUi::Collapse') | abpLocalization:(navRailCollapsed ? 'توسيع' : 'تصغير') }}
+      </span>
+    </button>
+
+  </aside>
+</div>

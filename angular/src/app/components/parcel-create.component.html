@@ -1,0 +1,61 @@
+<div class="container">
+
+  <h2>Create Parcel</h2>
+
+  <form (ngSubmit)="save()">
+
+    <div class="mb-3">
+      <input
+        class="form-control"
+        [(ngModel)]="model.senderName"
+        name="senderName"
+        placeholder="Sender Name">
+    </div>
+
+    <div class="mb-3">
+      <input
+        class="form-control"
+        [(ngModel)]="model.senderPhone"
+        name="senderPhone"
+        placeholder="Sender Phone">
+    </div>
+
+    <div class="mb-3">
+      <input
+        class="form-control"
+        [(ngModel)]="model.receiverName"
+        name="receiverName"
+        placeholder="Receiver Name">
+    </div>
+
+    <div class="mb-3">
+      <input
+        class="form-control"
+        [(ngModel)]="model.receiverPhone"
+        name="receiverPhone"
+        placeholder="Receiver Phone">
+    </div>
+
+    <div class="mb-3">
+      <textarea
+        class="form-control"
+        [(ngModel)]="model.pickupAddress"
+        name="pickupAddress">
+      </textarea>
+    </div>
+
+    <div class="mb-3">
+      <textarea
+        class="form-control"
+        [(ngModel)]="model.deliveryAddress"
+        name="deliveryAddress">
+      </textarea>
+    </div>
+
+    <button class="btn btn-primary">
+      Save
+    </button>
+
+  </form>
+
+</div>

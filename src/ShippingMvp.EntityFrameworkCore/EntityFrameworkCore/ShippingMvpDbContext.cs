@@ -1,9 +1,10 @@
-using Couriers.EntityFrameworkCore;
-using Couriers.EntityFrameworkCore;
 using Couriers.Domain;
+using Couriers.EntityFrameworkCore;
+using Couriers.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Modules.Parcels.EntityFrameworkCore;
 using ShippingManagement.Parcels;
+using ShippingManagement.Parcels.StatusHistory;
 using ShippingMvp.Books;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -37,6 +38,7 @@ public class ShippingMvpDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<CourierProfile> CourierProfiles { get; set; }
+    public DbSet<ParcelStatusHistory> ParcelStatusHistorys { get; set; }
     public DbSet<Book> Books { get; set; }
 
     public DbSet<Parcel> Parcels { get; set; }

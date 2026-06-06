@@ -11,7 +11,7 @@ using System.Linq.Dynamic.Core;
 
 namespace ShippingMvp.Books;
 
-[Authorize(ShippingMvpPermissions.Books.Default)]
+//[Authorize(ShippingMvpPermissions.Books.Default)]
 public class BookAppService : ApplicationService, IBookAppService
 {
     private readonly IRepository<Book, Guid> _repository;
@@ -44,7 +44,7 @@ public class BookAppService : ApplicationService, IBookAppService
         );
     }
 
-    [Authorize(ShippingMvpPermissions.Books.Create)]
+    //[Authorize(ShippingMvpPermissions.Books.Create)]
     public async Task<BookDto> CreateAsync(CreateUpdateBookDto input)
     {
         var book = ObjectMapper.Map<CreateUpdateBookDto, Book>(input);
@@ -52,7 +52,7 @@ public class BookAppService : ApplicationService, IBookAppService
         return ObjectMapper.Map<Book, BookDto>(book);
     }
 
-    [Authorize(ShippingMvpPermissions.Books.Edit)]
+    //[Authorize(ShippingMvpPermissions.Books.Edit)]
     public async Task<BookDto> UpdateAsync(Guid id, CreateUpdateBookDto input)
     {
         var book = await _repository.GetAsync(id);
@@ -61,7 +61,7 @@ public class BookAppService : ApplicationService, IBookAppService
         return ObjectMapper.Map<Book, BookDto>(book);
     }
 
-    [Authorize(ShippingMvpPermissions.Books.Delete)]
+    //[Authorize(ShippingMvpPermissions.Books.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _repository.DeleteAsync(id);

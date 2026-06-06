@@ -9,6 +9,9 @@
     "Permission:Parcels.Edit": "تعديل شحنات",
     "Permission:Parcels.Delete": "حذف شحنات",
     "Permission:Parcels.Assign": "تعيين مندوب",
+    "Permission:Couriers.Create": "إنشاء مندوب",
+    "Permission:Couriers.Edit": "تعديل مندوب",
+    "Permission:Couriers.Delete": "حذف مندوب",
     "Permission:Parcels.Deliver": "تحديث حالة التسليم",
     "Permission:Couriers": "المندوبون",
     "Permission:Tracking": "التتبع العام",
@@ -53,7 +56,7 @@
     "Parcels:0004": "سعر الشحنة غير صحيح! يجب أن يكون السعر قيمة موجبة أكبر من 0.",
     "NameSystem": "نظام الشحن",
     "HomeSystem": "الرئيسية",
-    "AllParcels": "كل الطرود",
+    "AllParcels": "كل الطرود"
     //"NewParcel": ""
 
   }

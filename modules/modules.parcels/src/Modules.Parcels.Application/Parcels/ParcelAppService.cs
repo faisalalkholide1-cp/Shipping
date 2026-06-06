@@ -2,12 +2,16 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Modules.Parcels;
+using Modules.Parcels.Parcels.StatusHistory;
 using ShippingManagement.Parcels.Dtos;
+using ShippingManagement.Parcels.StatusHistory;
 using ShippingManagement.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.ObjectMapping;
+using Volo.Abp.Users;
 
 namespace ShippingManagement.Parcels;
 
@@ -16,13 +20,19 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
 {
     private readonly IParcelRepository _parcelRepository;
     private readonly ParcelManager _parcelManager;
+    private readonly IParcelStatusHistoryRepository _historyRepository;
+    private readonly ICurrentUser _currentUser;
 
     public ParcelAppService(
         IParcelRepository parcelRepository,
-        ParcelManager parcelManager)
+        ParcelManager parcelManager,
+        IParcelStatusHistoryRepository historyRepository,
+        ICurrentUser currentUser)
     {
         _parcelRepository = parcelRepository;
         _parcelManager = parcelManager;
+        _historyRepository = historyRepository;
+        _currentUser = currentUser;
     }
 
     // ── GET ───────────────────────────────────────────────────────────────
@@ -107,7 +117,9 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
     {
         var parcel = await _parcelRepository.GetAsync(id);
 
-        parcel.AssignCourier(input.CourierId);
+        parcel.AssignCourier(input.CourierId, _currentUser.Id);
+
+        //parcel.AssignCourier(input.CourierId);
 
         await _parcelRepository.UpdateAsync(parcel);
 
@@ -119,7 +131,7 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
     {
         var parcel = await _parcelRepository.GetAsync(id);
 
-        parcel.MarkPickedUp();
+        parcel.MarkPickedUp(CurrentUser.Id);
 
         await _parcelRepository.UpdateAsync(parcel);
 
@@ -131,7 +143,7 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
     {
         var parcel = await _parcelRepository.GetAsync(id);
 
-        parcel.StartTransit();
+        parcel.StartTransit(CurrentUser.Id);
 
         await _parcelRepository.UpdateAsync(parcel);
 
@@ -143,7 +155,7 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
     {
         var parcel = await _parcelRepository.GetAsync(id);
 
-        parcel.MarkDelivered();
+        parcel.MarkDelivered(CurrentUser.Id);
 
         await _parcelRepository.UpdateAsync(parcel);
 
@@ -154,7 +166,7 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
     {
         var parcel = await _parcelRepository.GetAsync(id);
 
-        parcel.MarkOutForDelivery(); // استدعاء المنطق من الكيان مباشرة
+        parcel.MarkOutForDelivery(CurrentUser.Id); // استدعاء المنطق من الكيان مباشرة
 
         await _parcelRepository.UpdateAsync(parcel);
         return ObjectMapper.Map<Parcel, ParcelDto>(parcel);
@@ -164,7 +176,7 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
     {
         var parcel = await _parcelRepository.GetAsync(id);
 
-        parcel.MarkReturned(reason);
+        parcel.MarkReturned(reason, CurrentUser.Id);
 
         await _parcelRepository.UpdateAsync(parcel);
         return ObjectMapper.Map<Parcel, ParcelDto>(parcel);
@@ -175,11 +187,18 @@ public class ParcelAppService : ParcelsAppService, IParcelAppService
     {
         var parcel = await _parcelRepository.GetAsync(id);
 
-        parcel.Cancel();
+        parcel.Cancel(CurrentUser.Id);
 
         await _parcelRepository.UpdateAsync(parcel);
 
         return ObjectMapper.Map<Parcel, ParcelDto>(parcel);
+    }
+
+    // 3. أضف method جديدة لجلب الـ History
+    public async Task<List<ParcelStatusHistoryDto>> GetStatusHistoryAsync(Guid id)
+    {
+        var history = await _historyRepository.GetListByParcelIdAsync(id);
+        return ObjectMapper.Map<List<ParcelStatusHistory>, List<ParcelStatusHistoryDto>>(history);
     }
 
 }

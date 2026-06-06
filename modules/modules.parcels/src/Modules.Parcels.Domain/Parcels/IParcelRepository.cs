@@ -1,4 +1,3 @@
-// src/ShippingManagement.Domain/Parcels/IParcelRepository.cs
 
 using Modules.Parcels.Parcels;
 using System;

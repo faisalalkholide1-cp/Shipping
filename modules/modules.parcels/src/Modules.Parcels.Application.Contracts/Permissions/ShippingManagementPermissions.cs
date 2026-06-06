@@ -21,13 +21,13 @@ public static class ShippingManagementPermissions
         public const string Deliver = Default + ".Deliver";
     }
 
-    public static class Couriers
-    {
-        public const string Default = GroupName + ".Couriers";
-        public const string Create = Default + ".Create";
-        public const string Edit = Default + ".Edit";
-        public const string Delete = Default + ".Delete";
-    }
+    //public static class Couriers
+    //{
+    //    public const string Default = GroupName + ".Couriers";
+    //    public const string Create = Default + ".Create";
+    //    public const string Edit = Default + ".Edit";
+    //    public const string Delete = Default + ".Delete";
+    //}
 
     public static class Tracking
     {

@@ -10,10 +10,10 @@ internal static class ParcelStatusTransitionRules
         new ReadOnlyDictionary<ParcelStatus, ParcelStatus[]>(new Dictionary<ParcelStatus, ParcelStatus[]>
         {
             [ParcelStatus.Created] = [ParcelStatus.PickedUp, ParcelStatus.Cancelled],
-            [ParcelStatus.PickedUp] = [ParcelStatus.InTransit, ParcelStatus.Cancelled],
-            [ParcelStatus.InTransit] = [ParcelStatus.OutForDelivery, ParcelStatus.Cancelled],
-            [ParcelStatus.OutForDelivery] = [ParcelStatus.Delivered, ParcelStatus.Cancelled],
-            [ParcelStatus.Delivered] = [],
+            [ParcelStatus.PickedUp] = [ParcelStatus.InTransit, ParcelStatus.Cancelled],//
+            [ParcelStatus.InTransit] = [ParcelStatus.OutForDelivery, ParcelStatus.Cancelled], // في العبور
+            [ParcelStatus.OutForDelivery] = [ParcelStatus.Delivered, ParcelStatus.Cancelled], // خرج للتوصيل
+            [ParcelStatus.Delivered] = [],// سلمت 
             [ParcelStatus.Cancelled] = []
         });
 

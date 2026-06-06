@@ -4,10 +4,10 @@
     "MyAccount": "My account",
     "SamplePageMessage": "A sample page for the Couriers module",
     "Menu:Couriers": "Couriers",
-    "Permission:Couriers.Couriers": "Couriers",
-    "Permission:Couriers.Couriers.Create": "Create couriers",
-    "Permission:Couriers.Couriers.Edit": "Edit couriers",
-    "Permission:Couriers.Couriers.Delete": "Delete couriers",
+    "Permission:CouriersManagement": "Couriers Management",
+    "Permission:Couriers.Create": "Create couriers",
+    "Permission:Couriers.Edit": "Edit couriers",
+    "Permission:Couriers.Delete": "Delete couriers",
     "Menu:Couriers.All": "All Couriers",
     "Sidebar:System": "System"
   }

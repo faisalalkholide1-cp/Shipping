@@ -1,9 +1,10 @@
 // src/ShippingManagement.Application.Contracts/Parcels/IParcelAppService.cs
 
 using Modules.Parcels;
-using System;
-using System.Threading.Tasks;
 using ShippingManagement.Parcels.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -26,4 +27,8 @@ public interface IParcelAppService : IApplicationService
     Task<ParcelDto> StartTransitAsync(Guid id);
     Task<ParcelDto> MarkDeliveredAsync(Guid id);
     Task<ParcelDto> CancelAsync(Guid id);
+
+
+    /// <summary>جلب تاريخ تغييرات حالة الطرد</summary>
+    Task<List<ParcelStatusHistoryDto>> GetStatusHistoryAsync(Guid id);
 }

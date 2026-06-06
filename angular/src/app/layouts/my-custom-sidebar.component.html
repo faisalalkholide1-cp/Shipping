@@ -105,9 +105,9 @@
       <div class="sidebar__group" [class.sidebar__group--open]="fleetNavOpen">
         <button class="sidebar__item sidebar__item--parent"
                 (click)="toggleFleetNav($event)"
-                [title]="navRailCollapsed ? ('::Menu:Couriers' | abpLocalization) : ''">
+                [title]="navRailCollapsed ? ('Couriers::Menu:Couriers' | abpLocalization) : ''">
           <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-couriers"/></svg></span>
-          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Couriers' | abpLocalization }}</span>
+          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'Couriers::Menu:Couriers' | abpLocalization }}</span>
           <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
             <svg viewBox="0 0 24 24"><use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/></svg>
           </span>
@@ -116,10 +116,10 @@
           <a class="sidebar__child" routerLink="/couriers"
              routerLinkActive="sidebar__child--active"
              [routerLinkActiveOptions]="{exact:true}">
-            {{ '::Menu:Couriers.All' | abpLocalization }}
+            {{ 'Couriers::Menu:Couriers.All' | abpLocalization }}
           </a>
         </div>
-      </div>
+      </div> 
 
       <!-- فاصل -->
       <div class="sidebar__divider" *ngIf="!navRailCollapsed">

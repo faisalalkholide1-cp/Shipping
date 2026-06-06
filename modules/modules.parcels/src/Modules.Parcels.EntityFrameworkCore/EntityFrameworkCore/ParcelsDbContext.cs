@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShippingManagement.Parcels;
+using ShippingManagement.Parcels.StatusHistory;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ public class ParcelsDbContext : AbpDbContext<ParcelsDbContext>, IParcelsDbContex
      * public DbSet<Question> Questions { get; set; }
      */
     public DbSet<Parcel> Parcels { get; set; }
+    public DbSet<ParcelStatusHistory> ParcelStatusHistorys{ get; set; }
 
     public ParcelsDbContext(DbContextOptions<ParcelsDbContext> options)
         : base(options)
@@ -24,6 +26,5 @@ public class ParcelsDbContext : AbpDbContext<ParcelsDbContext>, IParcelsDbContex
         base.OnModelCreating(builder);
 
         builder.ConfigureParcels();
-        //builder.ParcelConfiguration()
     }
 }

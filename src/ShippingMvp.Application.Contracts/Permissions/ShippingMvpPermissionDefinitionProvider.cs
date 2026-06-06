@@ -11,10 +11,10 @@ public class ShippingMvpPermissionDefinitionProvider : PermissionDefinitionProvi
     {
         var myGroup = context.AddGroup(ShippingMvpPermissions.GroupName);
 
-        var booksPermission = myGroup.AddPermission(ShippingMvpPermissions.Books.Default, L("Permission:Books"));
-        booksPermission.AddChild(ShippingMvpPermissions.Books.Create, L("Permission:Books.Create"));
-        booksPermission.AddChild(ShippingMvpPermissions.Books.Edit, L("Permission:Books.Edit"));
-        booksPermission.AddChild(ShippingMvpPermissions.Books.Delete, L("Permission:Books.Delete"));
+        //var booksPermission = myGroup.AddPermission(ShippingMvpPermissions.Books.Default, L("Permission:Books"));
+        //booksPermission.AddChild(ShippingMvpPermissions.Books.Create, L("Permission:Books.Create"));
+        //booksPermission.AddChild(ShippingMvpPermissions.Books.Edit, L("Permission:Books.Edit"));
+        //booksPermission.AddChild(ShippingMvpPermissions.Books.Delete, L("Permission:Books.Delete"));
         //Define your own permissions here. Example:
         //myGroup.AddPermission(ShippingMvpPermissions.MyPermission1, L("Permission:MyPermission1"));
     }

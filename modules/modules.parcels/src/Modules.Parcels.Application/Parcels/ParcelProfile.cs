@@ -1,6 +1,7 @@
 using Riok.Mapperly.Abstractions;
 using ShippingManagement.Parcels;
 using ShippingManagement.Parcels.Dtos;
+using ShippingManagement.Parcels.StatusHistory;
 using Volo.Abp.Mapperly;
 
 
@@ -13,10 +14,13 @@ public partial class ParcelMapper : MapperBase<Parcel, ParcelDto>
 
     public override partial void Map(Parcel source, ParcelDto destination);
 
-    //public override partial Parcel Map(CreateParcelDto source);
+}
 
-    //public override partial void Map(CreateParcelDto source, Parcel destination);
+[Mapper]
+public partial class StatusHistoryMapper : MapperBase<ParcelStatusHistory, ParcelStatusHistoryDto>
+{
+    public override partial ParcelStatusHistoryDto Map(ParcelStatusHistory parcel);
 
-
+    public override partial void Map(ParcelStatusHistory source, ParcelStatusHistoryDto destination);
 
 }

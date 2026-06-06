@@ -26,13 +26,13 @@ public class ParcelsPermissionDefinitionProvider : PermissionDefinitionProvider
         parcels.AddChild(ShippingManagementPermissions.Parcels.Deliver, L("Permission:Parcels.Deliver"));
 
         // ── Couriers ─────────────────────────────────
-        var couriers = group.AddPermission(
-            ShippingManagementPermissions.Couriers.Default,
-            L("Permission:Couriers")
-        );
-        couriers.AddChild(ShippingManagementPermissions.Couriers.Create, L("Permission:Couriers.Create"));
-        couriers.AddChild(ShippingManagementPermissions.Couriers.Edit, L("Permission:Couriers.Edit"));
-        couriers.AddChild(ShippingManagementPermissions.Couriers.Delete, L("Permission:Couriers.Delete"));
+        //var couriers = group.AddPermission(
+        //    ShippingManagementPermissions.Couriers.Default,
+        //    L("Permission:Couriers")
+        //);
+        //couriers.AddChild(ShippingManagementPermissions.Couriers.Create, L("Permission:Couriers.Create"));
+        //couriers.AddChild(ShippingManagementPermissions.Couriers.Edit, L("Permission:Couriers.Edit"));
+        //couriers.AddChild(ShippingManagementPermissions.Couriers.Delete, L("Permission:Couriers.Delete"));
 
         // ── Tracking ──────────────────────────────────
         group.AddPermission(

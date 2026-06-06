@@ -4,11 +4,11 @@
     "MyAccount": "إدارة ملفى",
     "SamplePageMessage": "صفحة نموذجية للوحدة النمطية Couriers",
     "Menu:Couriers": "المناديب",
-    "Permission:Couriers.Couriers": "المناديب",
-    "Permission:Couriers.Couriers.Create": "إنشاء مناديب",
-    "Permission:Couriers.Couriers.Edit": "تعديل مناديب",
-    "Permission:Couriers.Couriers.Delete": "حذف مناديب",
+    "Permission:CouriersManagement": " إدارة المناديب",
+    "Permission:Couriers.Create": "إنشاء مناديب",
+    "Permission:Couriers.Edit": "تعديل مناديب",
+    "Permission:Couriers.Delete": "حذف مناديب",
     "Menu:Couriers.All": "كل المناديب",
     "Sidebar:System": "النظام"
-  }
+  } 
 }

@@ -9,8 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="10.3.0"/>
-    <ProjectReference Include="..\Couriers.Application.Contracts\Couriers.Application.Contracts.csproj" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="10.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Couriers.Application\Couriers.Application.csproj" />
   </ItemGroup>
 
 </Project>

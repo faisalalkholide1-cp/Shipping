@@ -45,7 +45,8 @@
       "path": "modules/modules.parcels/Modules.Parcels.abpmdl"
     },
     "Couriers": {
-      "path": "modules/couriers/Couriers.abpmdl"
+      "path": "modules/couriers/Couriers.abpmdl",
+      "isInstalled": true
     }
   },
   "folders": {

@@ -1,3 +1,6 @@
+// import { provideCouriers } from '@couriers/config';
+// import {  } from '@couriers/config';
+// import {  } from '@couriers/config';
 import { eThemeSharedComponents, provideAbpCore, ReplaceableComponentsService, withOptions } from '@abp/ng.core';
 import { provideAbpOAuth } from '@abp/ng.oauth';
 import { provideSettingManagementConfig } from '@abp/ng.setting-management/config';
@@ -18,10 +21,9 @@ import { APP_ROUTES } from './app.routes';
 import { APP_ROUTE_PROVIDER } from './route.provider';
 import { FOOTER_PROVIDER } from './footer/footer.config';
 import { provideParcels } from '@modules/parcels/config';
-// import { CustomSidebarComponent } from './layouts/my-custom-sidebar.component';
 import { eThemeLeptonXComponents } from '@abp/ng.theme.lepton-x'; 
 import { CustomSidebarComponent } from './layouts/my-custom-sidebar.component';
-// import { CustomSidebarComponent } from './custom-sidebar/custom-sidebar.component';
+import { provideCouriers } from 'modules/couriers/config/src/providers';
 
 export function initializeApp(replaceableComponents: ReplaceableComponentsService) {
   return () => {
@@ -41,11 +43,14 @@ export function initializeApp(replaceableComponents: ReplaceableComponentsServic
 export const appConfig: ApplicationConfig = {
   providers: [
     {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [ReplaceableComponentsService],
-      multi: true,
-    },
+    provide: APP_INITIALIZER,
+    // provideCouriers(),
+    useFactory: initializeApp,
+    deps: [ReplaceableComponentsService],
+    multi: true,
+  },
+provideParcels(),
+  provideCouriers(),
     provideRouter(APP_ROUTES),
     APP_ROUTE_PROVIDER,
     FOOTER_PROVIDER,

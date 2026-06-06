@@ -1,3 +1,4 @@
+using Couriers;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Account;
@@ -13,6 +14,7 @@ using Modules.Parcels;
 namespace ShippingMvp;
 
 [DependsOn(
+    typeof(CouriersApplicationModule),
     typeof(ParcelsApplicationModule),
     typeof(ShippingMvpDomainModule),
     typeof(ShippingMvpApplicationContractsModule),

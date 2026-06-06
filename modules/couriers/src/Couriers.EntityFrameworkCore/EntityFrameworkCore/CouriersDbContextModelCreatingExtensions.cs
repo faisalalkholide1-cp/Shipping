@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Couriers.Domain;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 
 namespace Couriers.EntityFrameworkCore;
@@ -10,24 +11,44 @@ public static class CouriersDbContextModelCreatingExtensions
     {
         Check.NotNull(builder, nameof(builder));
 
-        /* Configure all entities here. Example:
-
-        builder.Entity<Question>(b =>
+        builder.Entity<CourierProfile>(b =>
         {
-            //Configure table & schema name
-            b.ToTable(CouriersDbProperties.DbTablePrefix + "Questions", CouriersDbProperties.DbSchema);
+            b.ToTable("CourierProfiles");
+            b.HasKey(x => x.Id);
 
-            b.ConfigureByConvention();
+            b.Property(x => x.UserId)
+             .IsRequired();
 
-            //Properties
-            b.Property(q => q.Title).IsRequired().HasMaxLength(QuestionConsts.MaxTitleLength);
+            b.Property(x => x.FullName)
+             .IsRequired()
+             .HasMaxLength(128);
 
-            //Relations
-            b.HasMany(question => question.Tags).WithOne().HasForeignKey(qt => qt.QuestionId);
+            b.Property(x => x.Phone)
+             .IsRequired()
+             .HasMaxLength(32);
 
-            //Indexes
-            b.HasIndex(q => q.CreationTime);
+            b.Property(x => x.Email)
+             .IsRequired()
+             .HasMaxLength(256);
+
+            b.Property(x => x.Zone)
+             .HasMaxLength(128);
+
+            b.Property(x => x.Status)
+             .IsRequired()
+             .HasConversion<int>();
+
+            b.Property(x => x.IsAvailable)
+             .IsRequired();
+
+            b.Property(x => x.DeliveredCount)
+             .IsRequired()
+             .HasDefaultValue(0);
+
+            // Index للبحث السريع
+            b.HasIndex(x => x.UserId).IsUnique();
+            b.HasIndex(x => x.IsAvailable);
+            b.HasIndex(x => x.Zone);
         });
-        */
     }
 }

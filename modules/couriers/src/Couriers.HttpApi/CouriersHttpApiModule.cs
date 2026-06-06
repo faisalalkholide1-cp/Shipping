@@ -9,6 +9,7 @@ namespace Couriers;
 
 [DependsOn(
     typeof(CouriersApplicationContractsModule),
+    //typeof(CouriersApplicationModule),
     typeof(AbpAspNetCoreMvcModule))]
 public class CouriersHttpApiModule : AbpModule
 {

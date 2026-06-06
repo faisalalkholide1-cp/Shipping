@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -13,13 +12,23 @@
     "skipLibCheck": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": ["ES2022", "dom", "esnext.disposable"],
+    "lib": [
+      "ES2022",
+      "dom",
+      "esnext.disposable"
+    ],
     "paths": {
       "@modules/parcels": [
         "../modules/modules.parcels/angular/projects/parcels/src/public-api.ts"
       ],
       "@modules/parcels/config": [
         "../modules/modules.parcels/angular/projects/parcels/config/src/public-api.ts"
+      ],
+      "@couriers": [
+        "../modules/couriers/angular/projects/couriers/src/public-api.ts"
+      ],
+      "@couriers/config": [
+        "../modules/couriers/angular/projects/couriers/config/src/public-api.ts"
       ]
     },
     "useDefineForClassFields": false

@@ -1,3 +1,4 @@
+using Couriers.EntityFrameworkCore;
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Uow;
@@ -20,6 +21,7 @@ using Modules.Parcels.EntityFrameworkCore;
 namespace ShippingMvp.EntityFrameworkCore;
 
 [DependsOn(
+    typeof(CouriersEntityFrameworkCoreModule),
     typeof(ParcelsEntityFrameworkCoreModule),
     typeof(ShippingMvpDomainModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),

@@ -12,11 +12,7 @@
         <path stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"
           d="M20 7.5L12 3 4 7.5 12 12l8-4.5zM4 7.5v9l8 4.5v-9L4 7.5zM20 7.5v9l-8 4.5v-9l8-4.5z"/>
       </symbol>
-      <symbol id="ic-fleet" viewBox="0 0 24 24" fill="none">
-        <path stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
-          d="M1 9h14v9H1V9zM15 12l4 1.5V18h-4v-6zM5.5 18a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM17.5 18a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/>
-      </symbol>
-      <symbol id="ic-customers" viewBox="0 0 24 24" fill="none">
+      <symbol id="ic-couriers" viewBox="0 0 24 24" fill="none">
         <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.7"/>
         <path stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
           d="M1 21v-1a7 7 0 0114 0v1M16 3.13a4 4 0 010 7.75M22 21v-1a4 4 0 00-3-3.87"/>
@@ -48,6 +44,7 @@
     [attr.dir]="isRtl ? 'rtl' : 'ltr'"
   >
 
+    <!-- ── Brand ─────────────────────────────────────────────── -->
     <div class="sidebar__brand">
       <div class="sidebar__brand-icon">
         <i class="fas fa-shipping-fast"></i>
@@ -58,8 +55,10 @@
       </div>
     </div>
 
+    <!-- ── Nav ───────────────────────────────────────────────── -->
     <nav class="sidebar__nav">
 
+      <!-- الرئيسية -->
       <a class="sidebar__item"
          routerLink="/"
          routerLinkActive="sidebar__item--active"
@@ -69,6 +68,7 @@
         <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::HomeSystem' | abpLocalization }}</span>
       </a>
 
+      <!-- الشحنات -->
       <div class="sidebar__group" [class.sidebar__group--open]="parcelsNavOpen">
         <button class="sidebar__item sidebar__item--parent"
                 (click)="toggleParcelsNav($event)"
@@ -76,21 +76,23 @@
           <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-parcels"/></svg></span>
           <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Parcels' | abpLocalization }}</span>
           <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
-            <svg viewBox="0 0 24 24">
-              <use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/></svg>
           </span>
         </button>
         <div class="sidebar__children" *ngIf="parcelsNavOpen && !navRailCollapsed">
-          <a class="sidebar__child" routerLink="/parcels" routerLinkActive="sidebar__child--active" [routerLinkActiveOptions]="{exact:true}">
+          <a class="sidebar__child" routerLink="/parcels"
+             routerLinkActive="sidebar__child--active"
+             [routerLinkActiveOptions]="{exact:true}">
             {{ '::AllParcels' | abpLocalization }}
           </a>
-          <a class="sidebar__child" routerLink="/parcels/create" routerLinkActive="sidebar__child--active">
+          <a class="sidebar__child" routerLink="/parcels/create"
+             routerLinkActive="sidebar__child--active">
             {{ '::NewParcel' | abpLocalization }}
           </a>
         </div>
       </div>
 
+      <!-- تتبع شحنة -->
       <a class="sidebar__item"
          routerLink="/tracking"
          routerLinkActive="sidebar__item--active"
@@ -99,64 +101,58 @@
         <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Tracking' | abpLocalization }}</span>
       </a>
 
+      <!-- المناديب -->
       <div class="sidebar__group" [class.sidebar__group--open]="fleetNavOpen">
         <button class="sidebar__item sidebar__item--parent"
                 (click)="toggleFleetNav($event)"
-                [title]="navRailCollapsed ? ('::Permission:Couriers' | abpLocalization) : ''">
-          <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-fleet"/></svg></span>
-          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Permission:Couriers' | abpLocalization }}</span>
+                [title]="navRailCollapsed ? ('::Menu:Couriers' | abpLocalization) : ''">
+          <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-couriers"/></svg></span>
+          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Couriers' | abpLocalization }}</span>
           <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
-            <svg viewBox="0 0 24 24">
-              <use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/></svg>
           </span>
         </button>
         <div class="sidebar__children" *ngIf="fleetNavOpen && !navRailCollapsed">
-          <a class="sidebar__child" routerLink="/fleet/drivers" routerLinkActive="sidebar__child--active">
-            {{ '::Permission:Couriers' | abpLocalization }}
-          </a>
-          <a class="sidebar__child" routerLink="/fleet/vehicles" routerLinkActive="sidebar__child--active">
-            {{ 'AbpIdentity::Roles:Vehicles' | abpLocalization:'المركبات' }}
+          <a class="sidebar__child" routerLink="/couriers"
+             routerLinkActive="sidebar__child--active"
+             [routerLinkActiveOptions]="{exact:true}">
+            {{ '::Menu:Couriers.All' | abpLocalization }}
           </a>
         </div>
       </div>
 
-      <!-- <a class="sidebar__item"
-         routerLink="/customers"
-         routerLinkActive="sidebar__item--active"
-         [title]="navRailCollapsed ? ('AbpIdentity::Customers' | abpLocalization:'العملاء') : ''">
-        <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-customers"/></svg></span>
-        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'AbpIdentity::Customers' | abpLocalization:'العملاء' }}</span>
-      </a> -->
-
+      <!-- فاصل -->
       <div class="sidebar__divider" *ngIf="!navRailCollapsed">
-        <span>{{ 'AbpIdentity::System' | abpLocalization:'النظام' }}</span>
+        <span>{{ '::Sidebar:System' | abpLocalization }}</span>
       </div>
       <div class="sidebar__divider-mini" *ngIf="navRailCollapsed"></div>
 
+      <!-- الإعدادات -->
       <div class="sidebar__group" [class.sidebar__group--open]="settingsNavOpen">
         <button class="sidebar__item sidebar__item--parent"
                 (click)="toggleSettingsNav($event)"
-                [title]="navRailCollapsed ? ('AbpIdentity::Settings' | abpLocalization) : ''">
+                [title]="navRailCollapsed ? ('AbpSettingManagement::Settings' | abpLocalization) : ''">
           <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-settings"/></svg></span>
-          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'AbpIdentity::Settings' | abpLocalization }}</span>
+          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'AbpSettingManagement::Settings' | abpLocalization }}</span>
           <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
-            <svg viewBox="0 0 24 24">
-              <use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/></svg>
           </span>
         </button>
         <div class="sidebar__children" *ngIf="settingsNavOpen && !navRailCollapsed">
-          <a class="sidebar__child" routerLink="/identity/roles" routerLinkActive="sidebar__child--active">
+          <a class="sidebar__child" routerLink="/identity/roles"
+             routerLinkActive="sidebar__child--active">
             {{ 'AbpIdentity::Roles' | abpLocalization }}
           </a>
-          <a class="sidebar__child" routerLink="/identity/users" routerLinkActive="sidebar__child--active">
+          <a class="sidebar__child" routerLink="/identity/users"
+             routerLinkActive="sidebar__child--active">
             {{ 'AbpIdentity::Users' | abpLocalization }}
           </a>
-          <a class="sidebar__child" routerLink="/tenant-management/tenants" routerLinkActive="sidebar__child--active">
+          <a class="sidebar__child" routerLink="/tenant-management/tenants"
+             routerLinkActive="sidebar__child--active">
             {{ 'AbpTenantManagement::Tenants' | abpLocalization }}
           </a>
-          <a class="sidebar__child" routerLink="/setting-management" routerLinkActive="sidebar__child--active">
+          <a class="sidebar__child" routerLink="/setting-management"
+             routerLinkActive="sidebar__child--active">
             {{ 'AbpSettingManagement::Settings' | abpLocalization }}
           </a>
         </div>
@@ -164,6 +160,7 @@
 
     </nav>
 
+    <!-- ── Toggle ─────────────────────────────────────────────── -->
     <button class="sidebar__toggle" (click)="toggleNavRail()">
       <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
         <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -172,7 +169,7 @@
             : (navRailCollapsed ? 'M15 18l-6-6 6-6' : 'M9 18l6-6-6-6')"/>
       </svg>
       <span *ngIf="!navRailCollapsed">
-        {{ (navRailCollapsed ? 'AbpUi::Expand' : 'AbpUi::Collapse') | abpLocalization:(navRailCollapsed ? 'توسيع' : 'تصغير') }}
+        {{ (navRailCollapsed ? 'AbpUi::Expand' : 'AbpUi::Collapse') | abpLocalization }}
       </span>
     </button>
 

@@ -1,3 +1,4 @@
+using Couriers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ShippingMvp.Localization;
@@ -24,6 +25,7 @@ using Modules.Parcels;
 namespace ShippingMvp;
 
 [DependsOn(
+    typeof(CouriersDomainModule),
     typeof(ParcelsDomainModule),
     typeof(ShippingMvpDomainSharedModule),
     typeof(AbpAuditLoggingDomainModule),

@@ -1,8 +1,11 @@
+using Couriers.EntityFrameworkCore;
+using Couriers.EntityFrameworkCore;
+using Couriers.Domain;
 using Microsoft.EntityFrameworkCore;
 using Modules.Parcels.EntityFrameworkCore;
 using ShippingManagement.Parcels;
-using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using ShippingMvp.Books;
+using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -12,9 +15,9 @@ using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
@@ -23,15 +26,17 @@ namespace ShippingMvp.EntityFrameworkCore;
 [ReplaceDbContext(typeof(IIdentityDbContext))]
 [ReplaceDbContext(typeof(ITenantManagementDbContext))]
 [ReplaceDbContext(typeof(IParcelsDbContext))]
+[ReplaceDbContext(typeof(ICouriersDbContext))]
 [ConnectionStringName("Default")]
 public class ShippingMvpDbContext :
     AbpDbContext<ShippingMvpDbContext>,
     ITenantManagementDbContext,
     IIdentityDbContext,
     IParcelsDbContext
+    , ICouriersDbContext
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
-
+    public DbSet<CourierProfile> CourierProfiles { get; set; }
     public DbSet<Book> Books { get; set; }
 
     public DbSet<Parcel> Parcels { get; set; }
@@ -74,6 +79,12 @@ public class ShippingMvpDbContext :
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.ConfigureCouriers();
+
+        builder.ConfigureCouriers();
+
+        builder.ConfigureCouriers();
 
         /* Include modules to your migration db context */
 

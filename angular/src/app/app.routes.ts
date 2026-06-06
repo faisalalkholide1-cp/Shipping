@@ -1,12 +1,47 @@
 import { authGuard, permissionGuard } from '@abp/ng.core';
 import { Routes } from '@angular/router';
+import { COURIERS_ROUTES } from 'modules/couriers/src/public-api';
 
 export const APP_ROUTES: Routes = [
+  // ── Home ──────────────────────────────────────────────────────
   {
     path: '',
     pathMatch: 'full',
     loadComponent: () => import('./home/home.component').then(c => c.HomeComponent),
   },
+
+  // ── Parcels ───────────────────────────────────────────────────
+  {
+    path: 'parcels',
+    loadComponent: () =>
+      import('./components/parcels.component1').then(c => c.ParcelsComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: { requiredPolicy: 'ShippingManagement.Parcels' },
+  },
+  {
+    path: 'parcels/create',
+    loadComponent: () =>
+      import('./components/parcel-create.component').then(c => c.ParcelCreateComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: { requiredPolicy: 'ShippingManagement.Parcels.Create' },
+  },
+
+  // ── Tracking ──────────────────────────────────────────────────
+  {
+    path: 'tracking',
+    loadComponent: () =>
+      import('./components/track.component1').then(c => c.TrackComponent),
+  },
+
+  // ── Couriers ──────────────────────────────────────────────────
+  {
+    path: 'couriers',
+    children: COURIERS_ROUTES,
+    // canActivate: [authGuard, permissionGuard],
+    data: { requiredPolicy: 'Couriers.Couriers' },
+  },
+
+  // ── ABP Modules ───────────────────────────────────────────────
   {
     path: 'account',
     loadChildren: () => import('@abp/ng.account').then(c => c.createRoutes()),
@@ -23,32 +58,4 @@ export const APP_ROUTES: Routes = [
     path: 'setting-management',
     loadChildren: () => import('@abp/ng.setting-management').then(c => c.createRoutes()),
   },
-  {
-    path: 'books',
-    loadComponent: () => import('./book/book.component').then(c => c.BookComponent),
-    canActivate: [authGuard, permissionGuard],
-  },
-  {
-    path: 'parcels',
-    loadComponent: () => import('./components/parcels.component1').then(c => c.ParcelsComponent),
-    canActivate: [authGuard, permissionGuard],
-  },
-  {
-    path: 'parcelsCreate',
-    loadComponent: () => import('./components/parcel-create.component').then(c => c.ParcelCreateComponent),
-    canActivate: [authGuard, permissionGuard],
-  },
-  {
-    path: 'tracking',
-    loadComponent: () => import('./components/track.component1').then(c => c.TrackComponent),
-  },
-  // {
-  //   path: 'parcels',
-  //   loadChildren: () => import('@modules/parcels').then(m => m.PARCELS_ROUTES),
-  //   canActivate: [authGuard],
-  // },
-  // {
-  //   path: 'track',
-  //   loadChildren: () => import('@modules/parcels').then(m => m.TRACK_ROUTES),
-  // },
 ];

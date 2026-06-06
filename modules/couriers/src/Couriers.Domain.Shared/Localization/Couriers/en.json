@@ -1,7 +1,14 @@
 {
   "culture": "en",
   "texts": {
-    "MyAccount":  "My account",
-    "SamplePageMessage": "A sample page for the Couriers module"
+    "MyAccount": "My account",
+    "SamplePageMessage": "A sample page for the Couriers module",
+    "Menu:Couriers": "Couriers",
+    "Permission:Couriers.Couriers": "Couriers",
+    "Permission:Couriers.Couriers.Create": "Create couriers",
+    "Permission:Couriers.Couriers.Edit": "Edit couriers",
+    "Permission:Couriers.Couriers.Delete": "Delete couriers",
+    "Menu:Couriers.All": "All Couriers",
+    "Sidebar:System": "System"
   }
 }

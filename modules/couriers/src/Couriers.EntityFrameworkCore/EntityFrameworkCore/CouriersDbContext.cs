@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Couriers.Domain;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ public class CouriersDbContext : AbpDbContext<CouriersDbContext>, ICouriersDbCon
     /* Add DbSet for each Aggregate Root here. Example:
      * public DbSet<Question> Questions { get; set; }
      */
+    public DbSet<CourierProfile> CourierProfiles { get; set; }
 
     public CouriersDbContext(DbContextOptions<CouriersDbContext> options)
         : base(options)

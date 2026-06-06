@@ -16,5 +16,16 @@ public class CouriersApplicationModule : AbpModule
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         context.Services.AddMapperlyObjectMapper<CouriersApplicationModule>();
+
+        Configure<Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcOptions>(options =>
+        {
+            options.ConventionalControllers.Create(
+                typeof(CouriersApplicationModule).Assembly,
+                opts =>
+                {
+                    opts.RootPath = "couriers"; // /api/app/couriers/...
+                });
+        });
+
     }
 }

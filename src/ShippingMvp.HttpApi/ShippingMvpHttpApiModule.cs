@@ -1,3 +1,4 @@
+using Couriers;
 using Localization.Resources.AbpUi;
 using ShippingMvp.Localization;
 using Volo.Abp.Account;
@@ -14,6 +15,7 @@ using Modules.Parcels;
 namespace ShippingMvp;
 
  [DependsOn(
+    typeof(CouriersHttpApiModule),
     typeof(ParcelsHttpApiModule),
     typeof(ShippingMvpApplicationContractsModule),
     typeof(AbpPermissionManagementHttpApiModule),

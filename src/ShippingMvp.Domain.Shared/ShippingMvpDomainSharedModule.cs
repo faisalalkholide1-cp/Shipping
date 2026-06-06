@@ -1,3 +1,4 @@
+using Couriers;
 using ShippingMvp.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
@@ -17,6 +18,7 @@ using Volo.Abp.TenantManagement;
 namespace ShippingMvp;
 
 [DependsOn(
+    typeof(CouriersDomainSharedModule),
     typeof(AbpAuditLoggingDomainSharedModule),
     typeof(AbpBackgroundJobsDomainSharedModule),
     typeof(AbpFeatureManagementDomainSharedModule),

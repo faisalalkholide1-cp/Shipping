@@ -1,7 +1,8 @@
 {
   "generated": [
     "app",
-    "couriers"
+    "couriers",
+    "parcels"
   ],
   "modules": {
     "abp": {
@@ -1474,6 +1475,27 @@
                     "typeSimple": "ShippingManagement.Parcels.Dtos.ParcelDto",
                     "summary": null
                   }
+                },
+                {
+                  "name": "GetStatusHistoryAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null,
+                      "summary": null,
+                      "description": null,
+                      "displayName": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<ShippingManagement.Parcels.Dtos.ParcelStatusHistoryDto>",
+                    "typeSimple": "[ShippingManagement.Parcels.Dtos.ParcelStatusHistoryDto]",
+                    "summary": null
+                  }
                 }
               ]
             }
@@ -2062,6 +2084,64 @@
               "description": null,
               "displayName": null
             },
+            "MarkOutForDeliveryAsyncById": {
+              "uniqueName": "MarkOutForDeliveryAsyncById",
+              "name": "MarkOutForDeliveryAsync",
+              "httpMethod": "POST",
+              "url": "api/app/parcel/{id}/mark-out-for-delivery",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": "",
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                }
+              ],
+              "returnValue": {
+                "type": "ShippingManagement.Parcels.Dtos.ParcelDto",
+                "typeSimple": "ShippingManagement.Parcels.Dtos.ParcelDto",
+                "summary": null
+              },
+              "allowAnonymous": false,
+              "authorizeDatas": [
+                {
+                  "policy": "ShippingManagement.Parcels",
+                  "roles": null
+                },
+                {
+                  "policy": "ShippingManagement.Parcels.Deliver",
+                  "roles": null
+                }
+              ],
+              "implementFrom": "ShippingManagement.Parcels.ParcelAppService",
+              "summary": null,
+              "remarks": null,
+              "description": null,
+              "displayName": null
+            },
             "MarkDeliveredAsyncById": {
               "uniqueName": "MarkDeliveredAsyncById",
               "name": "MarkDeliveredAsync",
@@ -2115,60 +2195,6 @@
                 }
               ],
               "implementFrom": "ShippingManagement.Parcels.IParcelAppService",
-              "summary": null,
-              "remarks": null,
-              "description": null,
-              "displayName": null
-            },
-            "MarkOutForDeliveryAsyncById": {
-              "uniqueName": "MarkOutForDeliveryAsyncById",
-              "name": "MarkOutForDeliveryAsync",
-              "httpMethod": "POST",
-              "url": "api/app/parcel/{id}/mark-out-for-delivery",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "summary": null,
-                  "description": null,
-                  "displayName": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": "",
-                  "summary": null,
-                  "description": null,
-                  "displayName": null
-                }
-              ],
-              "returnValue": {
-                "type": "ShippingManagement.Parcels.Dtos.ParcelDto",
-                "typeSimple": "ShippingManagement.Parcels.Dtos.ParcelDto",
-                "summary": null
-              },
-              "allowAnonymous": false,
-              "authorizeDatas": [
-                {
-                  "policy": "ShippingManagement.Parcels",
-                  "roles": null
-                }
-              ],
-              "implementFrom": "ShippingManagement.Parcels.ParcelAppService",
               "summary": null,
               "remarks": null,
               "description": null,
@@ -2246,6 +2272,10 @@
                 {
                   "policy": "ShippingManagement.Parcels",
                   "roles": null
+                },
+                {
+                  "policy": "ShippingManagement.Parcels.Deliver",
+                  "roles": null
                 }
               ],
               "implementFrom": "ShippingManagement.Parcels.ParcelAppService",
@@ -2307,6 +2337,219 @@
                 }
               ],
               "implementFrom": "ShippingManagement.Parcels.IParcelAppService",
+              "summary": null,
+              "remarks": null,
+              "description": null,
+              "displayName": null
+            },
+            "GetStatusHistoryAsyncById": {
+              "uniqueName": "GetStatusHistoryAsyncById",
+              "name": "GetStatusHistoryAsync",
+              "httpMethod": "GET",
+              "url": "api/app/parcel/{id}/status-history",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": "",
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<ShippingManagement.Parcels.Dtos.ParcelStatusHistoryDto>",
+                "typeSimple": "[ShippingManagement.Parcels.Dtos.ParcelStatusHistoryDto]",
+                "summary": null
+              },
+              "allowAnonymous": false,
+              "authorizeDatas": [
+                {
+                  "policy": "ShippingManagement.Parcels",
+                  "roles": null
+                }
+              ],
+              "implementFrom": "ShippingManagement.Parcels.IParcelAppService",
+              "summary": null,
+              "remarks": null,
+              "description": null,
+              "displayName": null
+            },
+            "GetMyParcelsAsyncByInput": {
+              "uniqueName": "GetMyParcelsAsyncByInput",
+              "name": "GetMyParcelsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/parcel/my-parcels",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "ShippingManagement.Parcels.Dtos.MyParcelListFilterDto, Modules.Parcels.Application.Contracts",
+                  "type": "ShippingManagement.Parcels.Dtos.MyParcelListFilterDto",
+                  "typeSimple": "ShippingManagement.Parcels.Dtos.MyParcelListFilterDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "Status",
+                  "jsonName": null,
+                  "type": "Modules.Parcels.Parcels.ParcelStatus?",
+                  "typeSimple": "enum?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input",
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sorting",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input",
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SkipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input",
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "MaxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input",
+                  "summary": null,
+                  "description": null,
+                  "displayName": null
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<ShippingManagement.Parcels.Dtos.ParcelDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<ShippingManagement.Parcels.Dtos.ParcelDto>",
+                "summary": null
+              },
+              "allowAnonymous": false,
+              "authorizeDatas": [
+                {
+                  "policy": "ShippingManagement.Parcels",
+                  "roles": null
+                },
+                {
+                  "policy": "ShippingManagement.Parcels.Assign",
+                  "roles": null
+                }
+              ],
+              "implementFrom": "ShippingManagement.Parcels.ParcelAppService",
+              "summary": null,
+              "remarks": null,
+              "description": null,
+              "displayName": null
+            },
+            "GetMyDashboardAsync": {
+              "uniqueName": "GetMyDashboardAsync",
+              "name": "GetMyDashboardAsync",
+              "httpMethod": "GET",
+              "url": "api/app/parcel/my-dashboard",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "ShippingManagement.Parcels.Dtos.CourierDashboardDto",
+                "typeSimple": "ShippingManagement.Parcels.Dtos.CourierDashboardDto",
+                "summary": null
+              },
+              "allowAnonymous": false,
+              "authorizeDatas": [
+                {
+                  "policy": "ShippingManagement.Parcels",
+                  "roles": null
+                },
+                {
+                  "policy": "ShippingManagement.Parcels.Assign",
+                  "roles": null
+                }
+              ],
+              "implementFrom": "ShippingManagement.Parcels.ParcelAppService",
+              "summary": null,
+              "remarks": null,
+              "description": null,
+              "displayName": null
+            },
+            "GetAvailableCouriersAsync": {
+              "uniqueName": "GetAvailableCouriersAsync",
+              "name": "GetAvailableCouriersAsync",
+              "httpMethod": "GET",
+              "url": "api/app/parcel/available-couriers",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<Modules.Parcels.Couriers.CourierLookupItemDto>",
+                "typeSimple": "[Modules.Parcels.Couriers.CourierLookupItemDto]",
+                "summary": null
+              },
+              "allowAnonymous": false,
+              "authorizeDatas": [
+                {
+                  "policy": "ShippingManagement.Parcels",
+                  "roles": null
+                }
+              ],
+              "implementFrom": "ShippingManagement.Parcels.ParcelAppService",
               "summary": null,
               "remarks": null,
               "description": null,
@@ -2583,13 +2826,8 @@
                 "typeSimple": "ShippingMvp.Books.BookDto",
                 "summary": null
               },
-              "allowAnonymous": false,
-              "authorizeDatas": [
-                {
-                  "policy": "ShippingMvp.Books",
-                  "roles": null
-                }
-              ],
+              "allowAnonymous": null,
+              "authorizeDatas": [],
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<ShippingMvp.Books.BookDto,ShippingMvp.Books.BookDto,System.Guid,Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto>",
               "summary": null,
               "remarks": null,
@@ -2667,13 +2905,8 @@
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<ShippingMvp.Books.BookDto>",
                 "summary": null
               },
-              "allowAnonymous": false,
-              "authorizeDatas": [
-                {
-                  "policy": "ShippingMvp.Books",
-                  "roles": null
-                }
-              ],
+              "allowAnonymous": null,
+              "authorizeDatas": [],
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<ShippingMvp.Books.BookDto,ShippingMvp.Books.BookDto,System.Guid,Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto>",
               "summary": null,
               "remarks": null,
@@ -2721,17 +2954,8 @@
                 "typeSimple": "ShippingMvp.Books.BookDto",
                 "summary": null
               },
-              "allowAnonymous": false,
-              "authorizeDatas": [
-                {
-                  "policy": "ShippingMvp.Books",
-                  "roles": null
-                },
-                {
-                  "policy": "ShippingMvp.Books.Create",
-                  "roles": null
-                }
-              ],
+              "allowAnonymous": null,
+              "authorizeDatas": [],
               "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<ShippingMvp.Books.BookDto,ShippingMvp.Books.CreateUpdateBookDto>",
               "summary": null,
               "remarks": null,
@@ -2805,17 +3029,8 @@
                 "typeSimple": "ShippingMvp.Books.BookDto",
                 "summary": null
               },
-              "allowAnonymous": false,
-              "authorizeDatas": [
-                {
-                  "policy": "ShippingMvp.Books",
-                  "roles": null
-                },
-                {
-                  "policy": "ShippingMvp.Books.Edit",
-                  "roles": null
-                }
-              ],
+              "allowAnonymous": null,
+              "authorizeDatas": [],
               "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<ShippingMvp.Books.BookDto,System.Guid,ShippingMvp.Books.CreateUpdateBookDto>",
               "summary": null,
               "remarks": null,
@@ -2863,17 +3078,8 @@
                 "typeSimple": "System.Void",
                 "summary": null
               },
-              "allowAnonymous": false,
-              "authorizeDatas": [
-                {
-                  "policy": "ShippingMvp.Books",
-                  "roles": null
-                },
-                {
-                  "policy": "ShippingMvp.Books.Delete",
-                  "roles": null
-                }
-              ],
+              "allowAnonymous": null,
+              "authorizeDatas": [],
               "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>",
               "summary": null,
               "remarks": null,
@@ -8899,6 +9105,83 @@
       "description": null,
       "displayName": null
     },
+    "Modules.Parcels.Couriers.CourierLookupItemDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Id",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        },
+        {
+          "name": "FullName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        },
+        {
+          "name": "Zone",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        },
+        {
+          "name": "IsAvailable",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        }
+      ],
+      "summary": null,
+      "remarks": null,
+      "description": null,
+      "displayName": null
+    },
     "Modules.Parcels.Parcels.ParcelStatus": {
       "baseType": "System.Enum",
       "isEnum": true,
@@ -8971,6 +9254,83 @@
           "type": "System.Guid",
           "typeSimple": "string",
           "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        }
+      ],
+      "summary": null,
+      "remarks": null,
+      "description": null,
+      "displayName": null
+    },
+    "ShippingManagement.Parcels.Dtos.CourierDashboardDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "ActiveParcels",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        },
+        {
+          "name": "DeliveredToday",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        },
+        {
+          "name": "TotalDelivered",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        },
+        {
+          "name": "ReturnedParcels",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
           "minLength": null,
           "maxLength": null,
           "minimum": null,
@@ -9118,6 +9478,35 @@
           "maximum": "999999",
           "regex": null,
           "isNullable": false,
+          "summary": null,
+          "description": null,
+          "displayName": null
+        }
+      ],
+      "summary": null,
+      "remarks": null,
+      "description": null,
+      "displayName": null
+    },
+    "ShippingManagement.Parcels.Dtos.MyParcelListFilterDto": {
+      "baseType": "Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Status",
+          "jsonName": null,
+          "type": "Modules.Parcels.Parcels.ParcelStatus?",
+          "typeSimple": "enum?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null,
+          "isNullable": true,
           "summary": null,
           "description": null,
           "displayName": null

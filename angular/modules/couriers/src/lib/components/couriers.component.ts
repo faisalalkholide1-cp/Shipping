@@ -12,7 +12,7 @@ import { CourierStatus, courierStatusOptions } from 'src/app/proxy/couriers/doma
   standalone: true,
   templateUrl: './couriers.component.html',
   styleUrls: ['./couriers.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgbModule, LocalizationPipe],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgbModule],
 })
 export class CouriersComponent implements OnInit {
   private courierService = inject(CourierService);
@@ -148,7 +148,7 @@ export class CouriersComponent implements OnInit {
 
   // ── Delete ────────────────────────────────────────────────────
   delete(courier: CourierProfileDto): void {
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
+    this.confirmation.warn('ShippingMvp::AreYouSureToDelete', 'ShippingMvp::AreYouSure').subscribe(status => {
       if (status === 'confirm') {
         this.courierService.delete(courier.id!).subscribe(() => {
           if (this.selectedCourier?.id === courier.id) this.selectedCourier = null;

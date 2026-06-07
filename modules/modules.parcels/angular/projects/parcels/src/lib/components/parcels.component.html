@@ -27,11 +27,11 @@
   </div>
   <div class="card-body">
     <ngx-datatable [rows]="parcels.items" [count]="parcels.totalCount" [list]="list" default>
-      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="200" [sortable]="false">
+      <ngx-datatable-column [name]="'ShippingMvp::Actions' | abpLocalization" [maxWidth]="200" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
             <button class="btn btn-primary btn-sm dropdown-toggle" ngbDropdownToggle type="button">
-              <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
+              <i class="fa fa-cog me-1"></i>{{ 'ShippingMvp::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
               <button
@@ -41,7 +41,7 @@
                 (click)="openEdit(row)"
                 [disabled]="row.status === parcelStatus.Delivered || row.status === parcelStatus.Cancelled"
               >
-                {{ '::Edit' | abpLocalization }}
+                {{ 'ShippingMvp::Edit' | abpLocalization }}
               </button>
               @if (row.status === parcelStatus.Created) {
                 <button
@@ -99,7 +99,7 @@
                 type="button"
                 (click)="delete(row.id)"
               >
-                {{ '::Delete' | abpLocalization }}
+                {{ 'ShippingMvp::Delete' | abpLocalization }}
               </button>
             </div>
           </div>
@@ -114,7 +114,7 @@
           </span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
+      <ngx-datatable-column [name]="'ShippingMvp::CreationTime' | abpLocalization" prop="creationTime">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.creationTime | date: 'short' }}
         </ng-template>
@@ -125,7 +125,7 @@
 
 <abp-modal [(visible)]="isModalOpen">
   <ng-template #abpHeader>
-    <h5>{{ (selectedId ? '::Edit' : 'Parcels::NewParcel') | abpLocalization }}</h5>
+    <h5>{{ (selectedId ? 'ShippingMvp::Edit' : 'Parcels::NewParcel') | abpLocalization }}</h5>
   </ng-template>
   <ng-template #abpBody>
     <form [formGroup]="form" (ngSubmit)="save()">
@@ -166,9 +166,9 @@
     </form>
   </ng-template>
   <ng-template #abpFooter>
-    <button type="button" class="btn btn-secondary" abpClose>{{ '::Cancel' | abpLocalization }}</button>
+    <button type="button" class="btn btn-secondary" abpClose>{{ 'ShippingMvp::Close' | abpLocalization }}</button>
     <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">
-      {{ '::Save' | abpLocalization }}
+      {{ 'ShippingMvp::Save' | abpLocalization }}
     </button>
   </ng-template>
 </abp-modal>

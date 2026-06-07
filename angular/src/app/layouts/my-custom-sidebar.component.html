@@ -50,7 +50,7 @@
         <i class="fas fa-shipping-fast"></i>
       </div>
       <div class="sidebar__brand-text" *ngIf="!navRailCollapsed">
-        <span class="sidebar__brand-title">{{ '::NameSystem' | abpLocalization }}</span>
+        <span class="sidebar__brand-title">{{ 'Parcels::NameSystem' | abpLocalization }}</span>
         <span class="sidebar__brand-sub">Shipping MVP</span>
       </div>
     </div>
@@ -63,18 +63,18 @@
          routerLink="/"
          routerLinkActive="sidebar__item--active"
          [routerLinkActiveOptions]="{exact:true}"
-         [title]="navRailCollapsed ? ('::HomeSystem' | abpLocalization) : ''">
+         [title]="navRailCollapsed ? ('Parcels::HomeSystem' | abpLocalization) : ''">
         <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-dashboard"/></svg></span>
-        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::HomeSystem' | abpLocalization }}</span>
+        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'Parcels::HomeSystem' | abpLocalization }}</span>
       </a>
 
       <!-- الشحنات -->
       <div class="sidebar__group" [class.sidebar__group--open]="parcelsNavOpen">
         <button class="sidebar__item sidebar__item--parent"
                 (click)="toggleParcelsNav($event)"
-                [title]="navRailCollapsed ? ('::Menu:Parcels' | abpLocalization) : ''">
+                [title]="navRailCollapsed ? ('Parcels::Menu:Parcels' | abpLocalization) : ''">
           <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-parcels"/></svg></span>
-          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Parcels' | abpLocalization }}</span>
+          <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'Parcels::Menu:Parcels' | abpLocalization }}</span>
           <span class="sidebar__arrow" *ngIf="!navRailCollapsed">
             <svg viewBox="0 0 24 24"><use [attr.href]="isRtl ? '#ic-chevron-rtl' : '#ic-chevron-ltr'"/></svg>
           </span>
@@ -83,11 +83,11 @@
           <a class="sidebar__child" routerLink="/parcels"
              routerLinkActive="sidebar__child--active"
              [routerLinkActiveOptions]="{exact:true}">
-            {{ '::AllParcels' | abpLocalization }}
+            {{ 'Parcels::AllParcels' | abpLocalization }}
           </a>
           <a class="sidebar__child" routerLink="/parcels/create"
              routerLinkActive="sidebar__child--active">
-            {{ '::NewParcel' | abpLocalization }}
+            {{ 'Parcels::NewParcel' | abpLocalization }}
           </a>
         </div>
       </div>
@@ -96,9 +96,9 @@
       <a class="sidebar__item"
          routerLink="/tracking"
          routerLinkActive="sidebar__item--active"
-         [title]="navRailCollapsed ? ('::Menu:Tracking' | abpLocalization) : ''">
+         [title]="navRailCollapsed ? ('Parcels::Menu:Tracking' | abpLocalization) : ''">
         <span class="sidebar__icon"><svg viewBox="0 0 24 24"><use href="#ic-tracking"/></svg></span>
-        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ '::Menu:Tracking' | abpLocalization }}</span>
+        <span class="sidebar__label" *ngIf="!navRailCollapsed">{{ 'Parcels::Menu:Tracking' | abpLocalization }}</span>
       </a>
 
       <!-- المناديب -->
@@ -123,7 +123,7 @@
 
       <!-- فاصل -->
       <div class="sidebar__divider" *ngIf="!navRailCollapsed">
-        <span>{{ '::Sidebar:System' | abpLocalization }}</span>
+        <span>{{ 'Couriers::Sidebar:System' | abpLocalization }}</span>
       </div>
       <div class="sidebar__divider-mini" *ngIf="navRailCollapsed"></div>
 

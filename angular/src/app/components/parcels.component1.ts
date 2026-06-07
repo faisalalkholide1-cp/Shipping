@@ -1,30 +1,31 @@
 import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { LocalizationPipe } from '@abp/ng.core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ParcelService } from '../proxy/shipping-management/parcels';
+import { ParcelsFacade } from '../parcels.facade';
 import {
   ParcelDto,
   CreateParcelDto,
   UpdateParcelDto,
   ParcelListFilterDto,
-  AssignCourierDto,
 } from '../proxy/shipping-management/parcels/dtos';
 import { ConfirmationService } from '@abp/ng.theme.shared';
 import { ParcelStatus, parcelStatusOptions } from '../proxy/modules/parcels/parcels';
+import { LocalizationPipe } from '@abp/ng.core';
+import { ParcelFormComponent } from "./parcel-form-component/parcel-form.component";
 
 @Component({
   selector: 'app-parcels',
   standalone: true,
   templateUrl: './parcels.component.html',
   styleUrls: ['./parcels.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, NgbModule, FormsModule],
+  imports: [CommonModule, NgbModule, FormsModule, LocalizationPipe, ParcelFormComponent],
 })
 export class ParcelsComponent implements OnInit {
   private parcelService = inject(ParcelService);
+  private facade = inject(ParcelsFacade);
   private fb = inject(FormBuilder);
   private modalService = inject(NgbModal);
   private confirmation = inject(ConfirmationService);
@@ -33,16 +34,23 @@ export class ParcelsComponent implements OnInit {
   @ViewChild('courierModal') courierModal!: TemplateRef<any>;
   @ViewChild('returnModal') returnModal!: TemplateRef<any>;
 
-  // ── Data ─────────────────────────────────────────────────────
-  parcels: ParcelDto[] = [];
-  totalCount = 0;
-  isLoading = false;
+  // ── Observables from facade ───────────────────────────────────
+  public parcels = this.facade.parcels$;
+  public couriers = this.facade.couriers$;
+  public isLoading = this.facade.isLoading$;
+  public isAssigning = this.facade.isAssigning$;
 
-  // ── Couriers ─────────────────────────────────────────────────
-  couriers: any[] = [];
+  // Dashboard stats
+  public totalCount = this.facade.totalCount$;
+  public assignedCount = this.facade.assignedCount$;
+  public deliveredCount = this.facade.deliveredCount$;
+
+  // ── Local UI state ───────────────────────────────────────────
   selectedCourierId: string | null = null;
   courierModalRef?: NgbModalRef;
   currentParcelForCourier?: ParcelDto;
+  editingParcel?: ParcelDto;
+
 
   // ── Pagination ────────────────────────────────────────────────
   currentPage = 1;
@@ -74,6 +82,9 @@ export class ParcelsComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+
+    // use facade observables in template via async pipe
+
     this.loadParcels();
     this.loadCouriers();
   }
@@ -93,16 +104,11 @@ export class ParcelsComponent implements OnInit {
 
   // ── Couriers ─────────────────────────────────────────────────
   loadCouriers(): void {
-    // اربطه بـ CourierService الخاص بك لاحقاً
-    this.couriers = [
-      { id: '6224c3b9-d759-f2be-49f9-3a219ed458c9', name: 'John Doe' },
-      { id: '2', name: 'Ahmed Ali' },
-    ];
+    this.facade.loadCouriers();
   }
 
   // ── Parcels ───────────────────────────────────────────────────
   loadParcels(): void {
-    this.isLoading = true;
     const filter: ParcelListFilterDto = {
       filter:         this.filterText || undefined,
       status:         this.selectedStatus ?? undefined,
@@ -111,20 +117,14 @@ export class ParcelsComponent implements OnInit {
       sorting:        'creationTime desc',
     };
 
-    this.parcelService.getList(filter).subscribe({
-      next: res => {
-        this.parcels    = res.items ?? [];
-        this.totalCount = res.totalCount ?? 0;
-        this.isLoading  = false;
-      },
-      error: () => (this.isLoading = false),
-    });
+    this.facade.loadParcels(filter);
   }
 
   // ── Create / Edit Modal ───────────────────────────────────────
   openCreateModal(): void {
     this.isEditMode = false;
     this.editingId  = undefined;
+    this.editingParcel = undefined;
     this.form.reset();
     this.modalRef = this.modalService.open(this.parcelModal, { size: 'lg', centered: true });
   }
@@ -132,16 +132,7 @@ export class ParcelsComponent implements OnInit {
   openEditModal(parcel: ParcelDto): void {
     this.isEditMode = true;
     this.editingId  = parcel.id;
-    this.form.patchValue({
-      senderName:      parcel.senderName,
-      senderPhone:     parcel.senderPhone,
-      receiverName:    parcel.receiverName,
-      receiverPhone:   parcel.receiverPhone,
-      pickupAddress:   parcel.pickupAddress,
-      deliveryAddress: parcel.deliveryAddress,
-      weight:          parcel.weight,
-      price:           parcel.price,
-    });
+    this.editingParcel = parcel;
     this.modalRef = this.modalService.open(this.parcelModal, { size: 'lg', centered: true });
   }
 
@@ -159,6 +150,18 @@ export class ParcelsComponent implements OnInit {
     });
   }
 
+  onParcelFormSave(payload: CreateParcelDto | UpdateParcelDto): void {
+    this.isSaving = true;
+    const obs = this.isEditMode
+      ? this.parcelService.update(this.editingId!, payload as UpdateParcelDto)
+      : this.parcelService.create(payload as CreateParcelDto);
+
+    obs.subscribe({
+      next: () => { this.isSaving = false; this.modalRef?.close(); this.loadParcels(); },
+      error: () => (this.isSaving = false),
+    });
+  }
+
   // ── Courier Modal ─────────────────────────────────────────────
   openCourierModal(parcel: ParcelDto): void {
     this.currentParcelForCourier = parcel;
@@ -169,10 +172,11 @@ export class ParcelsComponent implements OnInit {
   submitCourierAssignment(): void {
     if (!this.selectedCourierId || !this.currentParcelForCourier?.id) return;
 
-    const input: AssignCourierDto = { courierId: this.selectedCourierId };
+    const courierId = this.selectedCourierId;
+    const parcelId = this.currentParcelForCourier.id;
 
-    this.parcelService.assignCourier(this.currentParcelForCourier.id, input).subscribe({
-      next:  () => { this.courierModalRef?.close(); this.loadParcels(); },
+    this.facade.assignCourier(parcelId, courierId).subscribe({
+      next: res => { this.courierModalRef?.close(); this.loadParcels(); },
       error: err => console.error('Courier assignment failed:', err),
     });
   }
@@ -196,7 +200,7 @@ export class ParcelsComponent implements OnInit {
 
   // ── Delete ────────────────────────────────────────────────────
   delete(parcel: ParcelDto): void {
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
+    this.confirmation.warn('ShippingMvp::AreYouSureToDelete', 'ShippingMvp::AreYouSure').subscribe(status => {
       if (status === 'confirm') {
         this.parcelService.delete(parcel.id!).subscribe(() => this.loadParcels());
       }
@@ -234,7 +238,7 @@ export class ParcelsComponent implements OnInit {
   onFilterChange(): void { this.currentPage = 1; this.loadParcels(); }
   onPageChange(page: number): void { this.currentPage = page; this.loadParcels(); }
 
-  get totalPages(): number { return Math.ceil(this.totalCount / this.pageSize); }
+  totalPages(totalCount: number): number { return Math.ceil(totalCount / this.pageSize); }
 
   // ── Helpers ───────────────────────────────────────────────────
   getStatusLabel(status?: ParcelStatus): string {

@@ -1,13 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <Import Project="..\..\common.props" />
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>Modules.Parcels</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Identity.Domain" Version="10.3.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain" Version="10.3.0" />
@@ -15,6 +12,6 @@
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="10.3.0" />
     <ProjectReference Include="..\Modules.Parcels.Application.Contracts\Modules.Parcels.Application.Contracts.csproj" />
     <ProjectReference Include="..\Modules.Parcels.Domain\Modules.Parcels.Domain.csproj" />
+    <ProjectReference Include="../../../couriers/src/Couriers.Application.Contracts/Couriers.Application.Contracts.csproj" />
   </ItemGroup>
-
 </Project>

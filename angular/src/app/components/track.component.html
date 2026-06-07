@@ -30,8 +30,8 @@
             <div class="text-muted small">{{ 'Parcels::TrackingNumber' | abpLocalization }}</div>
             <strong>{{ result.trackingNumber }}</strong>
           </div>
-          <span class="badge fs-6" [ngClass]="statusBadgeClass(result.status)">
-            {{ statusLabelKey(result.status) | abpLocalization }}
+          <span class="badge fs-6" [ngClass]="statusBadgeClass(result.status!)">
+            {{ statusLabelKey(result.status!) | abpLocalization }}
           </span>
         </div>
         <hr />
@@ -43,7 +43,7 @@
       <ul class="list-group list-group-flush">
         @for (item of result.history; track item.creationTime) {
           <li class="list-group-item d-flex justify-content-between">
-            <span>{{ statusLabelKey(item.status) | abpLocalization }}</span>
+            <span>{{ statusLabelKey(item.status!) | abpLocalization }}</span>
             <span class="text-muted small">{{ item.creationTime | date: 'medium' }}</span>
           </li>
         }

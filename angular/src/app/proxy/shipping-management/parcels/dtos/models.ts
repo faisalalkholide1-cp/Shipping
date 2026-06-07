@@ -5,6 +5,13 @@ export interface AssignCourierDto {
   courierId: string;
 }
 
+export interface CourierDashboardDto {
+  activeParcels?: number;
+  deliveredToday?: number;
+  totalDelivered?: number;
+  returnedParcels?: number;
+}
+
 export interface CreateParcelDto {
   senderName: string;
   senderPhone: string;
@@ -14,6 +21,10 @@ export interface CreateParcelDto {
   deliveryAddress: string;
   weight?: number;
   price?: number;
+}
+
+export interface MyParcelListFilterDto extends PagedAndSortedResultRequestDto {
+  status?: ParcelStatus | null;
 }
 
 export interface ParcelDto extends FullAuditedEntityDto<string> {

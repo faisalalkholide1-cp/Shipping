@@ -1,19 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <Import Project="..\..\common.props" />
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>Couriers</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Mapperly" Version="10.3.0" />
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="10.3.0" />
-		<PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="10.3.0" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="10.3.0" />
+    <PackageReference Include="Volo.Abp.EventBus" Version="10.3.0" />
     <ProjectReference Include="..\Couriers.Application.Contracts\Couriers.Application.Contracts.csproj" />
     <ProjectReference Include="..\Couriers.Domain\Couriers.Domain.csproj" />
+    <ProjectReference Include="../../../modules.parcels/src/Modules.Parcels.Application.Contracts/Modules.Parcels.Application.Contracts.csproj" />
+    <ProjectReference Include="../../../modules.parcels/src/Modules.Parcels.Domain/Modules.Parcels.Domain.csproj" />
   </ItemGroup>
-
 </Project>

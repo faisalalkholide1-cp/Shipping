@@ -41,6 +41,14 @@ export const APP_ROUTES: Routes = [
     data: { requiredPolicy: 'Couriers.Couriers' },
   },
 
+  // ── Courier Portal ───────────────────────────────────────────
+  {
+    path: 'my-parcels',
+    loadComponent: () => import('./components/my-parcels.component').then(c => c.MyParcelsComponent),
+    canActivate: [authGuard],
+    data: { requiredPolicy: 'ShippingManagement.Parcels.Assign' },
+  },
+
   // ── ABP Modules ───────────────────────────────────────────────
   {
     path: 'account',

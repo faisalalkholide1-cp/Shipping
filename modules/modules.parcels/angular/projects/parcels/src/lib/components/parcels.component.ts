@@ -130,7 +130,7 @@ export class ParcelsComponent implements OnInit {
   }
 
   delete(id: string): void {
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
+    this.confirmation.warn('ShippingMvp::AreYouSureToDelete', 'ShippingMvp::AreYouSure').subscribe(status => {
       if (status === Confirmation.Status.confirm) {
         this.parcelService.delete(id).subscribe(() => this.list.get());
       }
@@ -154,7 +154,7 @@ export class ParcelsComponent implements OnInit {
   }
 
   cancelParcel(id: string): void {
-    this.confirmation.warn('Parcels::CancelParcel', '::AreYouSure').subscribe(status => {
+    this.confirmation.warn('Parcels::CancelParcel', 'ShippingMvp::AreYouSure').subscribe(status => {
       if (status === Confirmation.Status.confirm) {
         this.parcelService.cancel(id).subscribe(() => this.list.get());
       }

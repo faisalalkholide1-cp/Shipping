@@ -1,7 +1,8 @@
-import type { AssignCourierDto, CreateParcelDto, ParcelDto, ParcelListFilterDto, UpdateParcelDto } from './dtos/models';
+import type { AssignCourierDto, CourierDashboardDto, CreateParcelDto, MyParcelListFilterDto, ParcelDto, ParcelListFilterDto, ParcelStatusHistoryDto, UpdateParcelDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
+import type { CourierLookupItemDto } from '../../modules/parcels/couriers/models';
 
 @Injectable({
   providedIn: 'root',
@@ -53,11 +54,44 @@ export class ParcelService {
     { apiName: this.apiName,...config });
   
 
+  getAvailableCouriers = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, CourierLookupItemDto[]>({
+      method: 'GET',
+      url: '/api/app/parcel/available-couriers',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (input: ParcelListFilterDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<ParcelDto>>({
       method: 'GET',
       url: '/api/app/parcel',
       params: { filter: input.filter, status: input.status, assignedCourierId: input.assignedCourierId, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getMyDashboard = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, CourierDashboardDto>({
+      method: 'GET',
+      url: '/api/app/parcel/my-dashboard',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getMyParcels = (input: MyParcelListFilterDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PagedResultDto<ParcelDto>>({
+      method: 'GET',
+      url: '/api/app/parcel/my-parcels',
+      params: { status: input.status, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getStatusHistory = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ParcelStatusHistoryDto[]>({
+      method: 'GET',
+      url: `/api/app/parcel/${id}/status-history`,
     },
     { apiName: this.apiName,...config });
   

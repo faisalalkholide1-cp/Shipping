@@ -12,7 +12,7 @@ function configureRoutes() {
   routes.add([
       {
         path: '/',
-        name: '::Menu:Home',
+        name: 'ShippingMvp::Menu:Home',
         iconClass: 'fas fa-home',
         order: 1,
         layout: eLayoutType.application,
@@ -31,6 +31,14 @@ function configureRoutes() {
       iconClass: 'fas fa-search-location',
       layout: eLayoutType.application,
       order: 3,
+    },
+    {
+      path: '/my-parcels',
+      name: 'Parcels::Menu:MyParcels',
+      iconClass: 'fas fa-box',
+      layout: eLayoutType.application,
+      requiredPolicy: 'ShippingManagement.Parcels.Assign',
+      order: 4,
     },
       // Books sample hidden for shipping MVP
       // {

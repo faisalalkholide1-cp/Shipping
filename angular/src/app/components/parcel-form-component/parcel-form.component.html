@@ -1,0 +1,62 @@
+<form [formGroup]="form" class="parcel-form">
+  <div class="form-section">
+    <h6 class="section-label"><i class="bi bi-person-up"></i> Sender</h6>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input formControlName="senderName" type="text" placeholder="Sender full name" [class.invalid]="isInvalid('senderName')" />
+        <span class="error-msg" *ngIf="isInvalid('senderName')">Required</span>
+      </div>
+      <div class="form-group">
+        <label>Phone *</label>
+        <input formControlName="senderPhone" type="text" placeholder="+1 555 000 0000" [class.invalid]="isInvalid('senderPhone')" />
+        <span class="error-msg" *ngIf="isInvalid('senderPhone')">Required</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Pickup Address *</label>
+      <input formControlName="pickupAddress" type="text" placeholder="Street, City, ZIP" [class.invalid]="isInvalid('pickupAddress')" />
+      <span class="error-msg" *ngIf="isInvalid('pickupAddress')">Required</span>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h6 class="section-label"><i class="bi bi-person-down"></i> Receiver</h6>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input formControlName="receiverName" type="text" placeholder="Receiver full name" [class.invalid]="isInvalid('receiverName')" />
+        <span class="error-msg" *ngIf="isInvalid('receiverName')">Required</span>
+      </div>
+      <div class="form-group">
+        <label>Phone *</label>
+        <input formControlName="receiverPhone" type="text" placeholder="+1 555 000 0000" [class.invalid]="isInvalid('receiverPhone')" />
+        <span class="error-msg" *ngIf="isInvalid('receiverPhone')">Required</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Delivery Address *</label>
+      <input formControlName="deliveryAddress" type="text" placeholder="Street, City, ZIP" [class.invalid]="isInvalid('deliveryAddress')" />
+      <span class="error-msg" *ngIf="isInvalid('deliveryAddress')">Required</span>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h6 class="section-label"><i class="bi bi-box"></i> Parcel Details</h6>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label>Weight (kg)</label>
+        <input formControlName="weight" type="number" min="0" step="0.1" placeholder="0.0" />
+      </div>
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input formControlName="price" type="number" min="0" step="0.01" placeholder="0.00" />
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn-save" (click)="submit()" [disabled]="form.invalid">{{ mode === 'edit' ? 'Update' : 'Create' }}</button>
+  </div>
+</form>

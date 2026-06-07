@@ -51,8 +51,14 @@
       "folder": "src"
     },
     "Couriers.Installer": {
-       "path": "src/Couriers.Installer/Couriers.Installer.abppkg",
-       "folder": "src"
+      "path": "src/Couriers.Installer/Couriers.Installer.abppkg",
+      "folder": "src"
+    }
+  },
+  "imports": {
+    "Modules.Parcels": {
+      "path": "../modules.parcels/Modules.Parcels.abpmdl",
+      "isInstalled": true
     }
   }
 }
